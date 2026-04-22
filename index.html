@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="./src/output.css" rel="stylesheet">
+    <script src="script.js" defer></script>
+    <title>Receitas da mimia</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+    </style>
+</head>
+<body class="bg-fundo-branco dark:bg-linear-to-br dark:from-marrom dark:to-preto text-preto dark:text-fundo-branco min-h-screen font-lato">
+    <div class="bg-marrom border-b border-b-laranja-primary">
+        <header class="flex justify-between items-center py-4 max-w-6xl mx-auto px-6 shadow-lg">
+            <div class="flex items-center gap-2">
+                <h1 class="text-fundo-branco hidden md:flex md:text-4xl font-play md:items-center">Receitas da
+                Mimia</h1>
+                <img src="img/chef-hat.svg" height="40" width="40" alt="">
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="bg-laranja-primary py-2 px-5 rounded-full text-preto font-semibold flex items-center gap-2 cursor-pointer transition-all duration-200 hover:brightness-110 hover:scale-105">
+                    <img src="img/cookie.svg" width="20" height="20" alt="">
+                    Nova receita
+                </button>
+                <button id="btn-dark" class="bg-fundo-branco rounded-full p-1.5 cursor-pointer transition-all duration-300"><img id="icon" height="22" width="22" src="img/sun-duotone.svg" alt=""></button>
+            </div>
+        </header>
+    </div>
+
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <div>
+            <h1 class="text-4xl md:text-6xl font-play">Suas receitas, <span class="text-laranja-secundary">do seu jeito</span>.</h1>
+            <p class="text-lg md:text-xl text-cinza dark:text-fundo-branco font-light">Adicione, edite e organize suas receitas favoritas.</p>
+        </div>
+        <div class="flex items-center justify-between py-12">
+            <div class="relative">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input placeholder="Buscar receita..." type="search" class="pl-9 pr-4 py-2 rounded-full border border-gray-300 dark:border-cinza bg-white dark:bg-preto text-sm text-preto dark:text-fundo-branco outline-none focus:border-laranja-primary transition-all duration-200 w-64">
+            </div>
+            <span class="qtd-receitas text-sm text-gray-400 dark:text-gray-200">5 receitas</span>
+        </div>
+
+        <section class="grid grid-cols-1 gap-5 md:grid-cols-3">
+            <div class="bg-white dark:bg-white/10 dark:backdrop-blur-md dark:border dark:border-white/20 overflow-hidden p-4 rounded-xl w-full border-2 border-transparent transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer">
+                <div class="bg-fundo-branco rounded-xl h-25 flex items-center justify-center text-5xl">🥕</div>
+                <h2 class="mt-4 text-2xl font-play font-bold">Bolo de cenoura</h2>
+                <div class="flex gap-4 py-2">
+                    <span class="text-sm flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">4
+                        <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
+                        </svg> 30 min
+                    </span>
+                    <span class="text-sm flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
+                            <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
+                        </svg>
+                        5 pessoas
+                    </span>
+                    <span class="text-sm flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
+                        <path d="M224,128a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM104,72H216a8,8,0,0,0,0-16H104a8,8,0,0,0,0,16ZM216,184H104a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM43.58,55.16,48,52.94V104a8,8,0,0,0,16,0V40a8,8,0,0,0-11.58-7.16l-16,8a8,8,0,0,0,7.16,14.32ZM79.77,156.72a23.73,23.73,0,0,0-9.6-15.95,24.86,24.86,0,0,0-34.11,4.7,23.63,23.63,0,0,0-3.57,6.46,8,8,0,1,0,15,5.47,7.84,7.84,0,0,1,1.18-2.13,8.76,8.76,0,0,1,12-1.59A7.91,7.91,0,0,1,63.93,159a7.64,7.64,0,0,1-1.57,5.78,1,1,0,0,0-.08.11L33.59,203.21A8,8,0,0,0,40,216H72a8,8,0,0,0,0-16H56l19.08-25.53A23.47,23.47,0,0,0,79.77,156.72Z"></path>
+                    </svg>
+                        8 ingredientes
+                    </span>
+                </div>
+                <div class="border border-fundo-branco"></div>
+                <div class="flex gap-2 justify-center mt-4">
+                    <button class="bg-laranja-primary hover:brightness-120 p-2 rounded-full border border-orange-500 transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
+                    <button class="bg-[#CC3F3A] hover:brightness-120 p-2 rounded-full border border-red-950 transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-white/10 dark:backdrop-blur-md dark:border dark:border-white/20 overflow-hidden p-4 rounded-xl w-full border-2 border-transparent transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer">
+                <div class="bg-fundo-branco rounded-xl h-25 flex items-center justify-center text-5xl">🥕</div>
+                <h2 class="mt-4 text-2xl font-play font-bold">Bolo de cenoura</h2>
+                <div class="flex gap-4 py-2">
+                    <span class="text-sm flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">4
+                        <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
+                        </svg> 30 min
+                    </span>
+                    <span class="text-sm flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
+                            <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
+                        </svg>
+                        5 pessoas
+                    </span>
+                    <span class="text-sm flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
+                        <path d="M224,128a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM104,72H216a8,8,0,0,0,0-16H104a8,8,0,0,0,0,16ZM216,184H104a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM43.58,55.16,48,52.94V104a8,8,0,0,0,16,0V40a8,8,0,0,0-11.58-7.16l-16,8a8,8,0,0,0,7.16,14.32ZM79.77,156.72a23.73,23.73,0,0,0-9.6-15.95,24.86,24.86,0,0,0-34.11,4.7,23.63,23.63,0,0,0-3.57,6.46,8,8,0,1,0,15,5.47,7.84,7.84,0,0,1,1.18-2.13,8.76,8.76,0,0,1,12-1.59A7.91,7.91,0,0,1,63.93,159a7.64,7.64,0,0,1-1.57,5.78,1,1,0,0,0-.08.11L33.59,203.21A8,8,0,0,0,40,216H72a8,8,0,0,0,0-16H56l19.08-25.53A23.47,23.47,0,0,0,79.77,156.72Z"></path>
+                    </svg>
+                        8 ingredientes
+                    </span>
+                </div>
+                <div class="border border-fundo-branco"></div>
+                <div class="flex gap-2 justify-center mt-4">
+                    <button class="bg-laranja-primary hover:brightness-120 p-2 rounded-full border border-orange-500 transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
+                    <button class="bg-[#CC3F3A] hover:brightness-120 p-2 rounded-full border border-red-950 transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-white/10 dark:backdrop-blur-md dark:border dark:border-white/20 overflow-hidden p-4 rounded-xl w-full border-2 border-transparent transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer">
+                <div class="bg-fundo-branco rounded-xl h-25 flex items-center justify-center text-5xl">🥕</div>
+                <h2 class="mt-4 text-2xl font-play font-bold">Bolo de cenoura</h2>
+                <div class="flex gap-4 py-2">
+                    <span class="text-sm flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">4
+                        <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
+                        </svg> 30 min
+                    </span>
+                    <span class="text-sm flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
+                            <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
+                        </svg>
+                        5 pessoas
+                    </span>
+                    <span class="text-sm flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
+                        <path d="M224,128a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM104,72H216a8,8,0,0,0,0-16H104a8,8,0,0,0,0,16ZM216,184H104a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM43.58,55.16,48,52.94V104a8,8,0,0,0,16,0V40a8,8,0,0,0-11.58-7.16l-16,8a8,8,0,0,0,7.16,14.32ZM79.77,156.72a23.73,23.73,0,0,0-9.6-15.95,24.86,24.86,0,0,0-34.11,4.7,23.63,23.63,0,0,0-3.57,6.46,8,8,0,1,0,15,5.47,7.84,7.84,0,0,1,1.18-2.13,8.76,8.76,0,0,1,12-1.59A7.91,7.91,0,0,1,63.93,159a7.64,7.64,0,0,1-1.57,5.78,1,1,0,0,0-.08.11L33.59,203.21A8,8,0,0,0,40,216H72a8,8,0,0,0,0-16H56l19.08-25.53A23.47,23.47,0,0,0,79.77,156.72Z"></path>
+                    </svg>
+                        8 ingredientes
+                    </span>
+                </div>
+                <div class="border border-fundo-branco"></div>
+                <div class="flex gap-2 justify-center mt-4">
+                    <button class="bg-laranja-primary hover:brightness-120 p-2 rounded-full border border-orange-500 transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
+                    <button class="bg-[#CC3F3A] hover:brightness-120 p-2 rounded-full border border-red-950 transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+</body>
+</html>
