@@ -130,3 +130,35 @@ function initDark(){
 }
 initDark()
 
+function initToggleMenu(){
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnMobile = document.querySelectorAll('.btn-opcoes-mobile')
+
+        btnMobile.forEach((botao) => {
+            botao.addEventListener('click', (event) => {
+                event.stopPropagation()
+
+                const menu = botao.nextElementSibling
+                document.querySelectorAll('.menu-dropdown').forEach((m) => {
+                    if(m !== menu){
+                        m.classList.add('hidden')
+                    }
+                })
+                menu.classList.toggle('hidden')
+            })
+        })
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.menu-dropdown').forEach((menu) => {
+                menu.classList.add('hidden')
+            })
+        })
+
+        document.querySelectorAll('.menu-dropdown').forEach((menu) => {
+            menu.addEventListener('click', (event) => {
+                event.stopPropagation()
+            })
+        })
+    })
+}
+initToggleMenu()

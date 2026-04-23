@@ -305,6 +305,9 @@
   .max-w-6xl {
     max-width: var(--container-6xl);
   }
+  .min-w-35 {
+    min-width: calc(var(--spacing) * 35);
+  }
   .min-w-\[140px\] {
     min-width: 140px;
   }
@@ -414,6 +417,12 @@
   .bg-white {
     background-color: var(--color-white);
   }
+  .fill-\[\#CC3F3A\] {
+    fill: #CC3F3A;
+  }
+  .fill-fundo-branco {
+    fill: var(--color-fundo-branco);
+  }
   .fill-preto {
     fill: var(--color-preto);
   }
@@ -493,6 +502,9 @@
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
+  }
+  .text-\[\#CC3F3A\] {
+    color: #CC3F3A;
   }
   .text-cinza {
     color: var(--color-cinza);
@@ -616,6 +628,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-red-50);
+      }
+    }
+  }
+  .hover\:fill-laranja-primary {
+    &:hover {
+      @media (hover: hover) {
+        fill: var(--color-laranja-primary);
       }
     }
   }
@@ -832,6 +851,11 @@
       --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
     }
   }
+  .dark\:fill-\[\#CC3F3A\] {
+    &:where(.dark, .dark *) {
+      fill: #CC3F3A;
+    }
+  }
   .dark\:fill-fundo-branco {
     &:where(.dark, .dark *) {
       fill: var(--color-fundo-branco);
@@ -859,6 +883,15 @@
       --tw-backdrop-blur: blur(var(--blur-md));
       -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
       backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+    }
+  }
+  .dark\:hover\:bg-\[\#CC3F3A\]\/20 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          background-color: color-mix(in oklab, #CC3F3A 20%, transparent);
+        }
+      }
     }
   }
   .dark\:hover\:bg-\[\#CC3F3A\]\/70 {
