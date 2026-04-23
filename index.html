@@ -34,14 +34,41 @@
             <h1 class="text-4xl md:text-6xl font-play">Suas receitas, <span class="text-laranja-secundary">do seu jeito</span>.</h1>
             <p class="text-lg md:text-xl text-cinza dark:text-fundo-branco font-light">Adicione, edite e organize suas receitas favoritas.</p>
         </div>
-        <div class="flex items-center justify-between py-12">
-            <div class="relative">
+
+        <div class="flex flex-wrap items-center justify-between gap-6 py-12">
+            <div class="relative w-full md:w-auto">
                 <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
-                <input placeholder="Buscar receita..." type="search" class="pl-9 pr-4 py-2 rounded-full border border-gray-300 dark:border-cinza bg-white dark:bg-preto text-sm text-preto dark:text-fundo-branco outline-none focus:border-laranja-primary transition-all duration-200 w-64">
+                <input placeholder="Buscar receita..." type="search" class="pl-9 pr-4 py-2 rounded-full border border-gray-300 dark:border-cinza bg-white dark:bg-preto text-sm text-preto dark:text-fundo-branco outline-none focus:border-laranja-primary transition-all duration-200 w-full md:w-64">
             </div>
+
+            <div class="flex gap-4">
+                <button class="bg-transparent hover:bg-laranja-primary border-2 border-laranja-primary dark:bg-laranja-primary hover:brightness-110 dark:hover:brightness-110 text-preto cursor-pointer hover:scale-105 transition-all duration-200 py-2 px-6 rounded-full flex items-center gap-2">
+                    Todos
+                </button>
+
+                <button class="bg-transparent hover:bg-laranja-primary border-2 border-laranja-primary dark:bg-laranja-primary hover:brightness-110 dark:hover:brightness-110 text-preto cursor-pointer hover:scale-105 transition-all duration-200 py-2 px-6 rounded-full flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-soup-icon lucide-soup"><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/>
+                        <path d="M7 21h10"/><path d="M19.5 12 22 6"/><path d="M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62"/>
+                        <path d="M11.25 3c.27.1.8.53.74 1.36-.05.83-.93 1.2-.98 2.02-.06.78.33 1.24.72 1.62"/>
+                        <path d="M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62"/>
+                    </svg>
+                    <span class="hidden md:inline">Salgados</span>
+                </button>
+
+                <button class="bg-transparent hover:bg-laranja-primary border-2 border-laranja-primary dark:bg-laranja-primary hover:brightness-110 dark:hover:brightness-110 text-preto cursor-pointer hover:scale-105 transition-all duration-200 py-2 px-6 rounded-full flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dessert-icon lucide-dessert">
+                        <path d="M10.162 3.167A10 10 0 0 0 2 13a2 2 0 0 0 4 0v-1a2 2 0 0 1 4 0v4a2 2 0 0 0 4 0v-4a2 2 0 0 1 4 0v1a2 2 0 0 0 4-.006 10 10 0 0 0-8.161-9.826"/>
+                        <path d="M20.804 14.869a9 9 0 0 1-17.608 0"/><circle cx="12" cy="4" r="2"/>
+                    </svg>
+                    <span class="hidden md:inline">Doces</span>
+                </button>
+
+            </div>
+
             <span class="qtd-receitas text-sm text-gray-400 dark:text-gray-200">5 receitas</span>
+
         </div>
 
         <section class="grid grid-cols-1 gap-5 md:grid-cols-3">
