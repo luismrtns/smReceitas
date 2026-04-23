@@ -12,11 +12,11 @@
     </style>
 </head>
 <body class="bg-fundo-branco dark:bg-linear-to-br dark:from-marrom dark:to-preto text-preto dark:text-fundo-branco min-h-screen font-lato">
+
     <div class="bg-marrom border-b border-b-laranja-primary">
         <header class="flex justify-between items-center py-4 max-w-6xl mx-auto px-6 shadow-lg">
             <div class="flex items-center gap-2">
-                <h1 class="text-fundo-branco hidden md:flex md:text-4xl font-play md:items-center">Receitas da
-                Mimia</h1>
+                <h1 class="text-fundo-branco hidden md:flex md:text-4xl font-play md:items-center">Receitas da Mimia</h1>
                 <img src="img/chef-hat.svg" height="40" width="40" alt="">
             </div>
             <div class="flex items-center gap-4">
@@ -35,6 +35,7 @@
             <p class="text-lg md:text-xl text-cinza dark:text-fundo-branco font-light">Adicione, edite e organize suas receitas favoritas.</p>
         </div>
 
+        <!--pesquisar e filtros-->
         <div class="flex flex-wrap items-center justify-between gap-6 py-12">
             <div class="relative w-full md:w-auto">
                 <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -71,9 +72,30 @@
 
         </div>
 
+        <!--cards-->
         <section class="grid grid-cols-1 gap-5 md:grid-cols-3">
 
-            <div class="max-h-52 md:hover:max-h-72 bg-white dark:bg-white/10 dark:backdrop-blur-md dark:border dark:border-white/20 shadow-xl overflow-hidden p-4 rounded-xl w-full border-2 border-transparent transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer">
+            <div class="max-h-52 md:hover:max-h-96 bg-white dark:bg-white/10 dark:backdrop-blur-md dark:border dark:border-white/20 shadow-xl overflow-hidden p-4 rounded-xl w-full border-2 border-transparent transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer">
+
+                <!--mobile-->
+                <div class="relative flex justify-end md:hidden">
+
+                    <button class="btn-opcoes-mobile p-1 absolute text-gray-500 hover:text-laranja-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256">
+                            <path d="M128,72a16,16,0,1,0-16-16A16,16,0,0,0,128,72Zm0,40a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,72a16,16,0,1,0,16,16A16,16,0,0,0,128,184Z"></path>
+                        </svg>
+                    </button>
+
+                    <div class="menu-dropdown hidden absolute right-0 top-10 bg-white dark:bg-[#26150F] border border-gray-200 dark:border-white/10 rounded-xl shadow-lg p-2 z-20 min-w-[140px]">
+                        <button class="flex items-center gap-2 px-4 py-2 text-sm w-full rounded-lg hover:bg-fundo-branco dark:hover:bg-white/10 transition-colors">
+                            <img src="img/note-pencil.svg" width="16" height="16" alt=""> Editar
+                        </button>
+                        <button class="flex items-center gap-2 px-4 py-2 text-sm w-full text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/20 transition-colors">
+                            <img src="img/trash.svg" width="16" height="16" alt=""> Excluir
+                        </button>
+                    </div>
+                </div>
+
                 <div class="bg-fundo-branco dark:bg-fundo-branco/10 rounded-xl h-25 flex items-center justify-center text-5xl">🥕</div>
 
                 <h2 class="mt-4 text-2xl font-play font-bold">Bolo de cenoura</h2>
@@ -102,6 +124,7 @@
 
                 </div>
 
+                <!--desktop-->
                 <div class="hidden md:flex gap-2 justify-center mt-4">
                     <button class="bg-laranja-primary dark:bg-laranja-primary/30 dark:hover:bg-laranja-primary/70 dark:backdrop-blur-lg dark:border dark:border-white/20 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
                     <button class="bg-[#CC3F3A] dark:bg-[#CC3F3A]/20 dark:hover:bg-[#CC3F3A]/70 dark:backdrop-blur-md dark:border dark:border-red-500/30 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
