@@ -138,7 +138,8 @@ function initToggleMenu(){
             botao.addEventListener('click', (event) => {
                 event.stopPropagation()
 
-                const menu = botao.nextElementSibling
+                const menu= botao.nextElementSibling
+                // fecha todos os menus que não são o botão clicado
                 document.querySelectorAll('.menu-dropdown').forEach((m) => {
                     if(m !== menu){
                         m.classList.add('hidden')
@@ -148,6 +149,7 @@ function initToggleMenu(){
             })
         })
 
+        // fecha o menu ao clicar fora
         document.addEventListener('click', () => {
             document.querySelectorAll('.menu-dropdown').forEach((menu) => {
                 menu.classList.add('hidden')
