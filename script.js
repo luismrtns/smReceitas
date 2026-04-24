@@ -164,3 +164,44 @@ function initToggleMenu(){
     })
 }
 initToggleMenu()
+
+function initAddInput(){
+    const lista_ingrediente = document.getElementById('lista-ingredientes')
+    const btn_input = document.getElementById('btn-input')
+
+    function addIngredient(){
+        const li = document.createElement('li')
+        li.className = 'flex items-center gap-2 relative group'
+
+        li.innerHTML = `
+           <span class="numero-item text-preto/60 font-semibold text-sm select-none mt-4"></span>
+           <input type="text" name="" id="" placeholder="Ex: 200g de arroz" class=" mt-4 w-full bg-fundo-branco border border-marrom/60 rounded-full px-4 py-2 focus:outline-none focus:border-laranja-primary transition-colors">
+           <button type="button" class="btn-remover mt-4 text-marrom hover:text-[#CC3F3A] p-2 cursor-pointer transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+           </button>    
+        `
+        lista_ingrediente.appendChild(li)
+        atualizarNumero(lista_ingrediente)
+    }
+
+    function atualizarNumero(lista){
+        const itens = lista.querySelectorAll('li')
+        itens.forEach((item, index) => {
+            item.querySelector('.numero-item').textContent = index + 1
+        })
+    }
+
+    if(btn_input){
+        btn_input.addEventListener('click', addIngredient)
+        addIngredient()
+    }
+
+    lista_ingrediente.addEventListener('click', (event) => {
+        const btnRemover = event.target.closest('.btn-remover')
+        if(btnRemover){
+            btnRemover.closest('li').remove()
+            atualizarNumero(lista_ingrediente)
+        }
+    })
+}
+initAddInput()
