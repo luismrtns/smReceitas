@@ -169,39 +169,82 @@ function initAddInput(){
     const lista_ingrediente = document.getElementById('lista-ingredientes')
     const btn_input = document.getElementById('btn-input')
 
+    function estilizarInput(){
+        const inputs = document.querySelectorAll('input')
+        inputs.forEach(input => {
+            if(input.value.trim() !== ''){
+                input.classList.remove('bg-marrom/50', 'border-marrom', 'text-preto')
+                input.classList.add('bg-transparent', 'border-transparent', 'text-marrom')
+            }
+        })
+    }
+
     function addIngredient(){
+        estilizarInput()
+
         const li = document.createElement('li')
         li.className = 'flex items-center gap-2 relative group'
 
-        li.innerHTML = `
-           <span class="numero-item text-preto/60 font-semibold text-sm select-none mt-4"></span>
-           <input type="text" name="" id="" placeholder="Ex: 200g de arroz" class=" mt-4 w-full bg-fundo-branco border border-marrom/60 rounded-full px-4 py-2 focus:outline-none focus:border-laranja-primary transition-colors">
-           <button type="button" class="btn-remover mt-4 text-marrom hover:text-[#CC3F3A] p-2 cursor-pointer transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-           </button>    
-        `
+        const lista_num = document.createElement('span')
+        lista_num.className = 'numero-item text-preto/60 font-semibold text-sm select-none mt-4'
+
+        const input = document.createElement('input')
+        input.type = 'text'
+        input.placeholder = 'Ex 200g de arroz'
+        input.className = 'mt-4 w-full bg-fundo-branco border border-marrom/60 rounded-full px-4 py-2 focus:outline-none focus:border-laranja-primary transition-colors'
+
         lista_ingrediente.appendChild(li)
         atualizarNumero(lista_ingrediente)
+
+        input.addEventListener('focus', () => {
+            input.classList.remove('bg-transparent', 'border-transparent', 'text-marrom')
+            input.classList.add('bg-fundo-branco', 'border-marrom', 'text-preto')
+        })
+
+        input.addEventListener('blur', () => {
+            if(input.value.trim() !== ''){
+                input.classList.remove('bg-marrom/50', 'border-marrom', 'text-preto')
+                input.classList.add('bg-transparent', 'border-transparent', 'text-marrom')
+            }
+        })
+
+        const btn_remover = document.createElement('button')
+        btn_remover.type = 'button'
+        btn_remover.className = 'btn-remover mt-4 text-marrom hover:text-[#CC3F3A] p-2 cursor-pointer transition-colors'
+        btn_remover.innerHTML = '<svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>'
+
+        li.appendChild(lista_num)
+        li.appendChild(input)
+        li.appendChild(btn_remover)
+
+        lista_ingrediente.appendChild(li)
+        atualizarNumero(lista_ingrediente)
+        input.focus()
     }
 
     function atualizarNumero(lista){
         const itens = lista.querySelectorAll('li')
         itens.forEach((item, index) => {
-            item.querySelector('.numero-item').textContent = index + 1
+            const span_numero = item.querySelector('.numero-item')
+            if(span_numero){
+                span_numero.textContent = index + 1
+            }else{
+                console.warn('Este <li> não tem a classe.numero-item', item);
+            }
         })
     }
 
-    if(btn_input){
-        btn_input.addEventListener('click', addIngredient)
-        addIngredient()
+    if (btn_input) {
+        btn_input.addEventListener('click', addIngredient);
+        addIngredient();
     }
 
     lista_ingrediente.addEventListener('click', (event) => {
-        const btnRemover = event.target.closest('.btn-remover')
-        if(btnRemover){
-            btnRemover.closest('li').remove()
-            atualizarNumero(lista_ingrediente)
+        const btnRemover = event.target.closest('.btn-remover');
+        if (btnRemover) {
+            btnRemover.closest('li').remove();
+            atualizarNumero(lista_ingrediente);
         }
-    })
+    });
 }
 initAddInput()

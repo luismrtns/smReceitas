@@ -201,6 +201,9 @@
   }
 }
 @layer utilities {
+  .pointer-events-none {
+    pointer-events: none;
+  }
   .absolute {
     position: absolute;
   }
@@ -394,12 +397,6 @@
   .border-marrom {
     border-color: var(--color-marrom);
   }
-  .border-marrom\/20 {
-    border-color: color-mix(in srgb, #26150F 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-marrom) 20%, transparent);
-    }
-  }
   .border-marrom\/30 {
     border-color: color-mix(in srgb, #26150F 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -447,6 +444,30 @@
   }
   .bg-marrom {
     background-color: var(--color-marrom);
+  }
+  .bg-marrom\/10 {
+    background-color: color-mix(in srgb, #26150F 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-marrom) 10%, transparent);
+    }
+  }
+  .bg-marrom\/20 {
+    background-color: color-mix(in srgb, #26150F 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-marrom) 20%, transparent);
+    }
+  }
+  .bg-marrom\/50 {
+    background-color: color-mix(in srgb, #26150F 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-marrom) 50%, transparent);
+    }
+  }
+  .bg-marrom\/80 {
+    background-color: color-mix(in srgb, #26150F 80%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-marrom) 80%, transparent);
+    }
   }
   .bg-preto {
     background-color: var(--color-preto);
@@ -514,9 +535,6 @@
   .pl-9 {
     padding-left: calc(var(--spacing) * 9);
   }
-  .text-center {
-    text-align: center;
-  }
   .font-fran {
     font-family: var(--font-fran);
   }
@@ -577,12 +595,6 @@
   .text-marrom {
     color: var(--color-marrom);
   }
-  .text-marrom\/30 {
-    color: color-mix(in srgb, #26150F 30%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      color: color-mix(in oklab, var(--color-marrom) 30%, transparent);
-    }
-  }
   .text-marrom\/50 {
     color: color-mix(in srgb, #26150F 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -615,6 +627,10 @@
   .shadow-xl {
     --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .blur {
+    --tw-blur: blur(8px);
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .transition-all {
     transition-property: all;
@@ -1102,25 +1118,6 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
-@property --tw-duration {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-scale-x {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-y {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-z {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
 @property --tw-blur {
   syntax: "*";
   inherits: false;
@@ -1173,6 +1170,25 @@
 @property --tw-drop-shadow-size {
   syntax: "*";
   inherits: false;
+}
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-scale-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
 }
 @property --tw-gradient-position {
   syntax: "*";
@@ -1275,10 +1291,6 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
-      --tw-duration: initial;
-      --tw-scale-x: 1;
-      --tw-scale-y: 1;
-      --tw-scale-z: 1;
       --tw-blur: initial;
       --tw-brightness: initial;
       --tw-contrast: initial;
@@ -1292,6 +1304,10 @@
       --tw-drop-shadow-color: initial;
       --tw-drop-shadow-alpha: 100%;
       --tw-drop-shadow-size: initial;
+      --tw-duration: initial;
+      --tw-scale-x: 1;
+      --tw-scale-y: 1;
+      --tw-scale-z: 1;
       --tw-gradient-position: initial;
       --tw-gradient-from: #0000;
       --tw-gradient-via: #0000;
