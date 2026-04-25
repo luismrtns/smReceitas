@@ -248,7 +248,6 @@ function initAddInput(idLista, idBotao, placeholder){
         }
     });
 }
-
 initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
 initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
 
@@ -272,6 +271,13 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
     const tipo = document.getElementById('tipo-receita').value
     const tempo = document.getElementById('tempo-receita').value
     const pessoas = document.getElementById('qtd-pessoas').value
+
+    if(nome.trim() === ''){
+        document.getElementById('erro-nome').classList.remove('hidden')
+        return
+    }else{
+        document.getElementById('erro-nome').classList.add('hidden')
+    }
 
     console.log(nome, emoji, tipo, tempo, pessoas)
 
@@ -302,6 +308,15 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
     console.log('salvo!', receitas)
 
     renderizarReceitas()
+    document.getElementById('form-modal').classList.add('hidden')
+    document.getElementById('nome-receita').value = ''
+    document.getElementById('emoji').value = ''
+    document.getElementById('tempo-receita').value = ''
+    document.getElementById('qtd-pessoas').value = ''
+    document.getElementById('lista-ingredientes').innerHTML = ''
+    document.getElementById('lista-preparo').innerHTML = ''
+    initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
+    initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
 })
 
 function renderizarReceitas(){
@@ -369,6 +384,8 @@ function renderizarReceitas(){
                 </div>`
             section.appendChild(card)
     })
+    const qtd = receitas.length
+    document.querySelector('.qtd-receitas').textContent = qtd === 1 ? '1 receita' : `${qtd} receitas`
 }
 renderizarReceitas()
 
