@@ -276,6 +276,9 @@
   .max-h-52 {
     max-height: calc(var(--spacing) * 52);
   }
+  .max-h-\[90vh\] {
+    max-height: 90vh;
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -352,6 +355,9 @@
   }
   .overflow-hidden {
     overflow: hidden;
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
   }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
@@ -445,28 +451,10 @@
   .bg-marrom {
     background-color: var(--color-marrom);
   }
-  .bg-marrom\/10 {
-    background-color: color-mix(in srgb, #26150F 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-marrom) 10%, transparent);
-    }
-  }
-  .bg-marrom\/20 {
-    background-color: color-mix(in srgb, #26150F 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-marrom) 20%, transparent);
-    }
-  }
   .bg-marrom\/50 {
     background-color: color-mix(in srgb, #26150F 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-marrom) 50%, transparent);
-    }
-  }
-  .bg-marrom\/80 {
-    background-color: color-mix(in srgb, #26150F 80%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-marrom) 80%, transparent);
     }
   }
   .bg-preto {
@@ -487,6 +475,12 @@
   .fill-\[\#CC3F3A\] {
     fill: #CC3F3A;
   }
+  .fill-fundo-branco {
+    fill: var(--color-fundo-branco);
+  }
+  .fill-marrom {
+    fill: var(--color-marrom);
+  }
   .fill-marrom\/50 {
     fill: color-mix(in srgb, #26150F 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -505,11 +499,20 @@
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
+  .p-3 {
+    padding: calc(var(--spacing) * 3);
+  }
   .p-4 {
     padding: calc(var(--spacing) * 4);
   }
   .p-6 {
     padding: calc(var(--spacing) * 6);
+  }
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+  .px-3\.5 {
+    padding-inline: calc(var(--spacing) * 3.5);
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
@@ -531,6 +534,9 @@
   }
   .pr-4 {
     padding-right: calc(var(--spacing) * 4);
+  }
+  .pb-6 {
+    padding-bottom: calc(var(--spacing) * 6);
   }
   .pl-9 {
     padding-left: calc(var(--spacing) * 9);
@@ -686,6 +692,13 @@
     &:hover {
       @media (hover: hover) {
         border-color: var(--color-marrom);
+      }
+    }
+  }
+  .hover\:bg-\[\#CC3F3A\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #CC3F3A;
       }
     }
   }
