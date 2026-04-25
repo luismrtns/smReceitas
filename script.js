@@ -264,3 +264,40 @@ document.getElementById('form-modal').addEventListener('click', (event) =>{
         document.getElementById('form-modal').classList.add('hidden')
     }
 })
+
+document.getElementById('btn-salvar').addEventListener('click', () => {
+    const nome = document.getElementById('nome-receita').value
+    const emoji = document.getElementById('emoji').value
+    const tipo = document.getElementById('tipo-receita').value
+    const tempo = document.getElementById('tempo-receita').value
+    const pessoas = document.getElementById('qtd-pessoas').value
+
+    console.log(nome, emoji, tipo, tempo, pessoas)
+
+    const ingredientes = []
+    document.querySelectorAll('#lista-ingredientes input').forEach((input) => {
+        if(input.value.trim() !== ''){
+            ingredientes.push(input.value.trim())
+        }
+    })
+    console.log(ingredientes)
+
+    const receita = {
+        id: Date.now(),
+        nome,
+        emoji,
+        tipo,
+        tempo,
+        pessoas,
+        ingredientes
+    }
+
+    console.log(receita)
+
+    const receitas = JSON.parse(localStorage.getItem('receitas')) || []
+    receitas.push(receita)
+
+    localStorage.setItem('receitas', JSON.stringify(receitas))
+    console.log('salvo!', receitas)
+})
+
