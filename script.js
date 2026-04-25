@@ -148,19 +148,6 @@ function initToggleMenu(){
                 menu.classList.toggle('hidden')
             })
         })
-
-        // fecha o menu ao clicar fora
-        document.addEventListener('click', () => {
-            document.querySelectorAll('.menu-dropdown').forEach((menu) => {
-                menu.classList.add('hidden')
-            })
-        })
-
-        document.querySelectorAll('.menu-dropdown').forEach((menu) => {
-            menu.addEventListener('click', (event) => {
-                event.stopPropagation()
-            })
-        })
     })
 }
 initToggleMenu()
@@ -402,4 +389,17 @@ document.querySelector('section').addEventListener('click', (event) => {
         localStorage.setItem('receitas', JSON.stringify(receitas))
         renderizarReceitas()
     }
+
+    // fecha o menu ao clicar fora
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.menu-dropdown').forEach((menu) => {
+            menu.classList.add('hidden')
+        })
+    })
+
+    document.querySelectorAll('.menu-dropdown').forEach((menu) => {
+        menu.addEventListener('click', (event) => {
+            event.stopPropagation()
+        })
+    })
 })
