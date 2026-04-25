@@ -327,7 +327,7 @@ function renderizarReceitas(){
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z"></path>
                             </svg> Editar
                         </button>
-                        <button class="flex items-center gap-2 px-4 py-2 text-sm w-full text-[#CC3F3A] rounded-lg hover:bg-red-50 dark:hover:bg-[#CC3F3A]/20 transition-colors">
+                        <button data-id="${receita.id}" class="btn-apagar flex items-center gap-2 px-4 py-2 text-sm w-full text-[#CC3F3A] rounded-lg hover:bg-red-50 dark:hover:bg-[#CC3F3A]/20 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-[#CC3F3A]" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path>
                             </svg> Excluir
                         </button>
@@ -365,10 +365,24 @@ function renderizarReceitas(){
                 <!--botões desktop-->
                 <div class="hidden md:flex gap-2 justify-center mt-4">
                     <button class="bg-laranja-primary dark:bg-laranja-primary/30 dark:hover:bg-laranja-primary/70 dark:backdrop-blur-lg dark:border dark:border-white/20 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
-                    <button class="bg-[#CC3F3A] dark:bg-[#CC3F3A]/20 dark:hover:bg-[#CC3F3A]/70 dark:backdrop-blur-md dark:border dark:border-red-500/30 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
+                    <button data-id="${receita.id}" class="btn-apagar bg-[#CC3F3A] dark:bg-[#CC3F3A]/20 dark:hover:bg-[#CC3F3A]/70 dark:backdrop-blur-md dark:border dark:border-red-500/30 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
                 </div>`
             section.appendChild(card)
     })
 }
-
 renderizarReceitas()
+
+// listener para apagar a receita
+document.querySelector('section').addEventListener('click', (event) => {
+    const btn_apagar = event.target.closest('.btn-apagar')
+
+    if(btn_apagar){
+        const id = +btn_apagar.dataset.id
+
+        let receitas = JSON.parse(localStorage.getItem('receitas')) || []
+        receitas = receitas.filter(receita => receita.id !== id)
+
+        localStorage.setItem('receitas', JSON.stringify(receitas))
+        renderizarReceitas()
+    }
+})
