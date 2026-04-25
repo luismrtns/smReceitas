@@ -170,7 +170,7 @@ function initAddInput(idLista, idBotao, placeholder){
     const btn_input = document.getElementById(idBotao)
 
     function estilizarInput(){
-        const inputs = document.querySelectorAll('input')
+        const inputs = lista.querySelectorAll('input')
         inputs.forEach(input => {
             if(input.value.trim() !== ''){
                 input.classList.remove('bg-marrom/50', 'border-marrom', 'text-preto')
@@ -186,31 +186,32 @@ function initAddInput(idLista, idBotao, placeholder){
         li.className = 'flex items-center gap-2 relative group'
 
         const lista_num = document.createElement('span')
-        lista_num.className = 'numero-item text-fundo-branco bg-marrom py-2 px-3.5 rounded-full font-semibold text-sm select-none mt-4'
+        lista_num.className = 'numero-item text-fundo-branco bg-marrom dark:bg-laranja-primary dark:text-marrom py-2 px-3.5 rounded-full font-semibold text-sm select-none mt-4'
 
         const input = document.createElement('input')
         input.type = 'text'
         input.placeholder = placeholder
-        input.className = 'mt-4 w-full bg-fundo-branco border border-marrom/60 rounded-full px-4 py-2 focus:outline-none focus:border-laranja-primary transition-colors'
+        input.className = 'mt-4 w-full bg-fundo-branco dark:bg-fundo-branco/10 dark:text-fundo-branco border border-marrom/60 dark:border-fundo-branco/20 rounded-full px-4 py-2 focus:outline-none focus:border-laranja-primary transition-colors'
 
         lista.appendChild(li)
         atualizarNumero(lista)
 
         input.addEventListener('focus', () => {
-            input.classList.remove('bg-transparent', 'border-transparent', 'text-marrom')
+            input.classList.remove('input-preenchido', 'text-marrom', 'text-fundo-branco')
             input.classList.add('bg-fundo-branco', 'border-marrom', 'text-preto')
         })
 
         input.addEventListener('blur', () => {
             if(input.value.trim() !== ''){
-                input.classList.remove('bg-marrom/50', 'border-marrom', 'text-preto')
-                input.classList.add('bg-transparent', 'border-transparent', 'text-marrom')
+                input.classList.add('input-preenchido')
+                const isDark = document.documentElement.classList.contains('dark')
+                input.classList.add(isDark ? 'text-fundo-branco' : 'text-marrom')
             }
         })
 
         const btn_remover = document.createElement('button')
         btn_remover.type = 'button'
-        btn_remover.className = 'btn-remover mt-4 text-marrom hover:bg-[#CC3F3A] hover:text-fundo-branco p-2 rounded-full cursor-pointer transition-colors'
+        btn_remover.className = 'btn-remover mt-4 text-marrom dark:text-fundo-branco hover:bg-[#CC3F3A] hover:text-fundo-branco p-2 rounded-full cursor-pointer transition-colors'
         btn_remover.innerHTML = '<svg class="w-5 h-5 pointer-events-none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>'
 
         li.appendChild(lista_num)
@@ -249,3 +250,17 @@ function initAddInput(idLista, idBotao, placeholder){
 }
 initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
 initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
+
+document.getElementById('nova-receita').addEventListener('click', () => {
+    document.getElementById('form-modal').classList.remove('hidden')
+})
+
+document.getElementById('btn-cancelar').addEventListener('click', () => {
+    document.getElementById('form-modal').classList.add('hidden')
+})
+
+document.getElementById('form-modal').addEventListener('click', (event) =>{
+    if(event.target === document.getElementById('form-modal')){
+        document.getElementById('form-modal').classList.add('hidden')
+    }
+})

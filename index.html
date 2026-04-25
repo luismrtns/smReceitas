@@ -8,7 +8,13 @@
     <script src="script.js" defer></script>
     <title>Receitas da mimia</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');    </style>
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+        .input-preenchido {
+            background: transparent !important;
+            border-color: transparent !important;
+        }
+
+    </style>
 </head>
 <body class="bg-fundo-branco dark:bg-linear-to-br dark:from-marrom dark:to-preto text-preto dark:text-fundo-branco min-h-screen font-lato">
 
@@ -19,7 +25,7 @@
                 <img src="img/chef-hat.svg" height="40" width="40" alt="">
             </div>
             <div class="flex items-center gap-4">
-                <button class="bg-laranja-primary py-2 px-5 rounded-full text-preto font-semibold flex items-center gap-2 cursor-pointer transition-all duration-200 hover:brightness-110 hover:scale-105">
+                <button id="nova-receita" class="bg-laranja-primary py-2 px-5 rounded-full text-preto font-semibold flex items-center gap-2 cursor-pointer transition-all duration-200 hover:brightness-110 hover:scale-105">
                     <img src="img/cookie.svg" width="20" height="20" alt="">
                     Nova receita
                 </button>
@@ -137,7 +143,7 @@
     </main>
 
     <!--modal formulário-->
-    <div id="form-modal" class="fixed inset-0 bg-preto/50 flex items-center justify-center z-50 p-4">
+    <div id="form-modal" class="hidden fixed inset-0 bg-preto/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white dark:bg-marrom rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
 
             <h2 class="text-2xl font-fran  mb-6 bg-marrom text-fundo-branco px-4 py-2 rounded-full shadow-md">Nova receita</h2>
@@ -186,7 +192,7 @@
                 <h3 class="text-xl font-fran">Ingredientes</h3>
                 <ul id="lista-ingredientes" class="space-y-3">
                 </ul>
-                <button id="btn-input" class="group flex gap-1 items-center w-full border-2 border-dotted border-marrom/30 hover:border-laranja-primary text-marrom/50 hover:text-laranja-primary cursor-pointer justify-center p-1 mt-4 rounded-full" type="button">
+                <button id="btn-input" class="group flex gap-1 items-center w-full border-2 border-dotted border-marrom/30 dark:border-fundo-branco/40 hover:border-laranja-primary text-marrom/50 dark:text-fundo-branco hover:text-laranja-primary cursor-pointer justify-center p-1 mt-4 rounded-full" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" class="fill-marrom/50 dark:fill-fundo-branco group-hover:fill-laranja-primary" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path>
                     </svg>
                     Adicionar ingrediente
@@ -196,7 +202,7 @@
             <div class="mt-6">
                 <h3 class="text-xl font-fran"">Modo de preparo</h3>
                 <ul id="lista-preparo"></ul>
-                <button id="btn-preparo" class="group flex gap-1 items-center w-full border-2 border-dotted border-marrom/30 hover:border-laranja-primary text-marrom/50 hover:text-laranja-primary cursor-pointer justify-center p-1 mt-4 rounded-full" type="button">
+                <button id="btn-preparo" class="group flex gap-1 items-center w-full border-2 border-dotted border-marrom/30 dark:border-fundo-branco/40 hover:border-laranja-primary text-marrom/50 dark:text-fundo-branco hover:text-laranja-primary cursor-pointer justify-center p-1 mt-4 rounded-full" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" class="fill-marrom/50 dark:fill-fundo-branco group-hover:fill-laranja-primary" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path>
                     </svg>
                     Adicionar etapa
@@ -204,8 +210,8 @@
             </div>
 
             <div class="mt-8 flex gap-4 justify-end">
-                <button class="border-2 border-marrom/70 text-preto/70 hover:border-marrom hover:text-fundo-branco hover:bg-marrom px-6 py-2 rounded-full cursor-pointer transition-all duration-300" id="btn-cancelar">Cancelar</button>
-                <button class="bg-laranja-primary px-6 py-2 rounded-full font-semibold border-2 border-marrom hover:brightness-110 cursor-pointer transition-all duration-300" id="btn-salvar">Salvar</button>
+                <button id="btn-cancelar" class="border-2 border-marrom/70 text-preto/70 hover:border-marrom hover:text-fundo-branco hover:bg-marrom dark:border-fundo-branco/40 dark:text-fundo-branco px-6 py-2 rounded-full cursor-pointer transition-all duration-300" id="btn-cancelar">Cancelar</button>
+                <button class="bg-laranja-primary dark:text-preto px-6 py-2 rounded-full font-semibold border-2 border-marrom hover:brightness-110  cursor-pointer transition-all duration-300" id="btn-salvar">Salvar</button>
             </div>
 
         </div>

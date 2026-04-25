@@ -858,11 +858,24 @@
       border-color: var(--color-cinza);
     }
   }
+  .dark\:border-fundo-branco {
+    &:where(.dark, .dark *) {
+      border-color: var(--color-fundo-branco);
+    }
+  }
   .dark\:border-fundo-branco\/20 {
     &:where(.dark, .dark *) {
       border-color: color-mix(in srgb, #FAF6ED 20%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         border-color: color-mix(in oklab, var(--color-fundo-branco) 20%, transparent);
+      }
+    }
+  }
+  .dark\:border-fundo-branco\/40 {
+    &:where(.dark, .dark *) {
+      border-color: color-mix(in srgb, #FAF6ED 40%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        border-color: color-mix(in oklab, var(--color-fundo-branco) 40%, transparent);
       }
     }
   }
@@ -965,9 +978,27 @@
       color: var(--color-fundo-branco);
     }
   }
+  .dark\:text-fundo-branco\/50 {
+    &:where(.dark, .dark *) {
+      color: color-mix(in srgb, #FAF6ED 50%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        color: color-mix(in oklab, var(--color-fundo-branco) 50%, transparent);
+      }
+    }
+  }
   .dark\:text-gray-200 {
     &:where(.dark, .dark *) {
       color: var(--color-gray-200);
+    }
+  }
+  .dark\:text-marrom {
+    &:where(.dark, .dark *) {
+      color: var(--color-marrom);
+    }
+  }
+  .dark\:text-preto {
+    &:where(.dark, .dark *) {
+      color: var(--color-preto);
     }
   }
   .dark\:backdrop-blur-lg {
