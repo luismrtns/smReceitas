@@ -130,27 +130,7 @@ function initDark(){
 }
 initDark()
 
-function initToggleMenu(){
-    document.addEventListener('DOMContentLoaded', () => {
-        const btnMobile = document.querySelectorAll('.btn-opcoes-mobile')
 
-        btnMobile.forEach((botao) => {
-            botao.addEventListener('click', (event) => {
-                event.stopPropagation()
-
-                const menu= botao.nextElementSibling
-                // fecha todos os menus que não são o botão clicado
-                document.querySelectorAll('.menu-dropdown').forEach((m) => {
-                    if(m !== menu){
-                        m.classList.add('hidden')
-                    }
-                })
-                menu.classList.toggle('hidden')
-            })
-        })
-    })
-}
-initToggleMenu()
 
 function initAddInput(idLista, idBotao, placeholder){
     const lista = document.getElementById(idLista)
@@ -276,6 +256,14 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
     })
     console.log(ingredientes)
 
+    const preparo = []
+    document.querySelectorAll('#lista-preparo input').forEach((input) => {
+        if(input.value.trim() !== ''){
+            preparo.push(input.value.trim())
+        }
+    })
+    console.log(preparo)
+
     const receita = {
         id: Date.now(),
         nome,
@@ -283,7 +271,8 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
         tipo,
         tempo,
         pessoas,
-        ingredientes
+        ingredientes,
+        preparo
     }
 
     console.log(receita)
@@ -313,7 +302,8 @@ function renderizarReceitas(){
 
     receitas.forEach(receita => {
         const card = document.createElement('div')
-        card.className = 'max-h-52 md:hover:max-h-96 bg-white dark:bg-white/10 dark:backdrop-blur-md dark:border dark:border-white/20 shadow-xl overflow-hidden p-4 rounded-xl w-full border-2 border-transparent transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer'
+        card.dataset.id = receita.id
+        card.className = 'card max-h-52 md:hover:max-h-96 bg-white dark:bg-white/10 dark:backdrop-blur-md dark:border dark:border-white/20 shadow-xl overflow-hidden p-4 rounded-xl w-full border-2 border-transparent transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer'
         card.innerHTML = `
                 <!--menu mobile-->
                 <div class="relative flex justify-end md:hidden">
@@ -325,7 +315,7 @@ function renderizarReceitas(){
                     </button>
 
                     <div class="menu-dropdown hidden absolute right-0 top-10 bg-white dark:bg-marrom border border-gray-200 dark:border-white/10 rounded-xl shadow-lg p-2 z-20 min-w-35">
-                        <button class="flex items-center gap-2 px-4 py-2 text-sm w-full rounded-lg hover:bg-fundo-branco dark:hover:bg-white/10 transition-colors">
+                        <button class="btn-editar flex items-center gap-2 px-4 py-2 text-sm w-full rounded-lg hover:bg-fundo-branco dark:hover:bg-white/10 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z"></path>
                             </svg> Editar
                         </button>
@@ -366,17 +356,39 @@ function renderizarReceitas(){
 
                 <!--botões desktop-->
                 <div class="hidden md:flex gap-2 justify-center mt-4">
-                    <button class="bg-laranja-primary dark:bg-laranja-primary/30 dark:hover:bg-laranja-primary/70 dark:backdrop-blur-lg dark:border dark:border-white/20 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
+                    <button class="btn-editar bg-laranja-primary dark:bg-laranja-primary/30 dark:hover:bg-laranja-primary/70 dark:backdrop-blur-lg dark:border dark:border-white/20 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
                     <button data-id="${receita.id}" class="btn-apagar bg-[#CC3F3A] dark:bg-[#CC3F3A]/20 dark:hover:bg-[#CC3F3A]/70 dark:backdrop-blur-md dark:border dark:border-red-500/30 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
                 </div>`
             section.appendChild(card)
     })
     const qtd = receitas.length
     document.querySelector('.qtd-receitas').textContent = qtd === 1 ? '1 receita' : `${qtd} receitas`
+
+    function initToggleMenu(){
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnMobile = document.querySelectorAll('.btn-opcoes-mobile')
+
+            btnMobile.forEach((botao) => {
+                botao.addEventListener('click', (event) => {
+                    event.stopPropagation()
+
+                    const menu= botao.nextElementSibling
+                    // fecha todos os menus que não são o botão clicado
+                    document.querySelectorAll('.menu-dropdown').forEach((m) => {
+                        if(m !== menu){
+                            m.classList.add('hidden')
+                        }
+                    })
+                    menu.classList.toggle('hidden')
+                })
+            })
+        })
+    }
+    initToggleMenu()
 }
 renderizarReceitas()
 
-// listener para apagar a receita
+// listener para apagar a receita e abrir a receita
 document.querySelector('section').addEventListener('click', (event) => {
     const btn_apagar = event.target.closest('.btn-apagar')
 
@@ -402,4 +414,60 @@ document.querySelector('section').addEventListener('click', (event) => {
             event.stopPropagation()
         })
     })
+
+    document.querySelector('section').addEventListener('click', (event) => {
+        const card = event.target.closest('.card')
+        const btn_apagar = event.target.closest('.btn-apagar')
+        const btn_editar = event.target.closest('.btn-editar')
+        const btnMobile = event.target.closest('.btn-opcoes-mobile')
+
+        if(card && !btn_apagar && !btn_editar && !btnMobile){
+            const id = +card.dataset.id
+            initAbrirDetalhes(id)
+        }
+    })
 })
+
+function initAbrirDetalhes(id){
+    const receitas = JSON.parse(localStorage.getItem('receitas')) || []
+    const receita = receitas.find(r => r.id === id)
+    document.getElementById('conteudo-detalhes').innerHTML = `
+        <div class="text-4xl mb-5">${receita.emoji}</div>
+        <div class="text-3xl font-fran font-bold">${receita.nome}</div>
+        
+        <div class="flex gap-4 mt-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">4
+                <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
+            <span class="text-sm">${receita.tempo}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
+                <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
+            </svg>
+            <span class="text-sm">${receita.pessoas} pessoa(s)</span>
+        </div>
+        
+        <h2 class="text-xl font-semibold mt-4 font-fran">Ingredientes</h2>
+        <ul class="mt-4 flex flex-col gap-2">
+            ${receita.ingredientes.map((ingrediente, i) => (
+               `<li class="flex gap-3 items-center">
+                    <span class="numero-item text-fundo-branco bg-marrom dark:bg-laranja-primary dark:text-marrom py-2 px-3.5 rounded-full font-semibold text-sm select-none">
+                        ${i + 1}
+                    </span>
+                    ${ingrediente}
+                </li>`
+            )).join('')}
+        </ul>
+        
+        <h2 class="text-xl font-semibold mt-4 font-fran">Modo de preparo</h2>
+        <ul class="mt-4 flex flex-col gap-2">
+            ${receita.preparo.map((etapa, i) => (
+                `<li class="flex gap-3 items-center">
+                    <span class="numero-item text-fundo-branco bg-marrom dark:bg-laranja-primary dark:text-marrom py-2 px-3.5 rounded-full font-semibold text-sm select-none">
+                        ${i + 1}
+                    </span>
+                    <p class="text-sm">${etapa}</p>
+                 </li>`
+            )).join('')}
+        </ul>
+    `
+    document.getElementById('form-detalhes').classList.remove('hidden')
+}
