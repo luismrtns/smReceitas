@@ -324,7 +324,7 @@ function renderizarReceitas(){
 
         const card = document.createElement('div')
         card.dataset.id = receita.id
-        card.className = 'card max-h-52 md:hover:max-h-96 bg-white dark:bg-white/10 dark:backdrop-blur-md dark:border dark:border-white/20 shadow-xl overflow-hidden p-4 rounded-xl w-full border-2 border-transparent transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer'
+        card.className = 'card max-h-52 md:hover:max-h-96 bg-white dark:bg-white/5 dark:backdrop-blur-lg dark:border dark:border-white/20 shadow-xl overflow-hidden p-4 rounded-xl w-full border-2 border-preto/10 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer'
         card.innerHTML = `
                 <!--menu mobile-->
                 <div class="relative flex justify-end md:hidden">
@@ -418,10 +418,20 @@ document.querySelector('section').addEventListener('click', (event) => {
 
     // Se o botão de apagar for clicado
     if (btnApagar) {
-        let receitas = JSON.parse(localStorage.getItem('receitas')) || [];
-        receitas = receitas.filter(receita => receita.id !== id);
-        localStorage.setItem('receitas', JSON.stringify(receitas));
-        renderizarReceitas();
+        if (confirm('Tem certeza que deseja excluir esta receita?')) {
+
+            card.style.transition = 'all 0.3s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.8)';
+
+            setTimeout(() => {
+                let receitas = JSON.parse(localStorage.getItem('receitas')) || [];
+                receitas = receitas.filter(receita => receita.id !== id);
+                localStorage.setItem('receitas', JSON.stringify(receitas));
+
+                renderizarReceitas();
+            }, 300);
+        }
         return;
     }
 
