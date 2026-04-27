@@ -20,17 +20,21 @@
 <body class="bg-fundo-branco dark:bg-linear-to-br dark:from-marrom dark:to-preto text-preto dark:text-fundo-branco min-h-screen font-lato">
 
     <div class="bg-marrom border-b border-b-laranja-primary">
-        <header class="flex justify-between items-center py-4 max-w-6xl mx-auto px-6 shadow-lg">
+        <header class="relative flex justify-between items-center py-4 max-w-6xl mx-auto px-6 shadow-lg">
             <div class="flex items-center gap-2">
                 <h1 class="text-fundo-branco hidden md:flex md:text-4xl font-fran md:items-center">Receitas da Mimia</h1>
                 <img src="img/chef-hat.svg" height="40" width="40" alt="">
             </div>
+
             <div class="flex items-center gap-4">
-                <button id="nova-receita" class="bg-laranja-primary py-2 px-5 rounded-full text-preto font-semibold flex items-center gap-2 cursor-pointer transition-all duration-200 hover:brightness-110 hover:scale-105">
+                <button id="nova-receita" class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 bg-laranja-primary py-2 px-5 rounded-full text-preto font-semibold flex items-center gap-2 cursor-pointer transition-all duration-200 hover:brightness-110 hover:scale-105">
                     <img src="img/cookie.svg" width="20" height="20" alt="">
                     Nova receita
                 </button>
-                <button id="btn-dark" class="bg-fundo-branco rounded-full p-1.5 cursor-pointer transition-all duration-300"><img id="icon" height="22" width="22" src="img/sun-duotone.svg" alt=""></button>
+
+                <button id="btn-dark" class="bg-fundo-branco rounded-full p-1.5 cursor-pointer transition-all duration-300">
+                    <img id="icon" height="22" width="22" src="img/sun-duotone.svg" alt="">
+                </button>
             </div>
         </header>
     </div>
