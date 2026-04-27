@@ -103,7 +103,6 @@
 // })
 // console.log(total)
 
-// tema dark
 // Inicializa o modo escuro com base na preferência salva do usuário
 function initDark(){
     const btn_dark = document.getElementById("btn-dark");
@@ -131,7 +130,6 @@ function initDark(){
     })
 }
 initDark()
-
 
 // Inicializa a funcionalidade de adicionar novos campos de entrada para ingredientes e preparo
 function initAddInput(idLista, idBotao, placeholder){
@@ -245,6 +243,12 @@ document.getElementById('form-modal').addEventListener('click', (event) =>{
         document.getElementById('form-modal').classList.add('hidden')
     }
 })
+// Esconde o modal se o clique for fora do formulário
+document.getElementById('form-detalhes').addEventListener('click', (event) => {
+    if(event.target === document.getElementById('form-detalhes')){
+        document.getElementById('form-detalhes').classList.add('hidden')
+    }
+})
 
 // Salva a nova receita
 document.getElementById('btn-salvar').addEventListener('click', () => {
@@ -354,7 +358,7 @@ function renderizarReceitas(){
                     <span class="text-sm flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
                         <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
-                        </svg> ${receita.tempo}
+                        </svg> ${receita.tempo} min
                     </span>
 
                     <span class="text-sm flex items-center">
@@ -368,7 +372,7 @@ function renderizarReceitas(){
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
                         <path d="M224,128a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM104,72H216a8,8,0,0,0,0-16H104a8,8,0,0,0,0,16ZM216,184H104a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM43.58,55.16,48,52.94V104a8,8,0,0,0,16,0V40a8,8,0,0,0-11.58-7.16l-16,8a8,8,0,0,0,7.16,14.32ZM79.77,156.72a23.73,23.73,0,0,0-9.6-15.95,24.86,24.86,0,0,0-34.11,4.7,23.63,23.63,0,0,0-3.57,6.46,8,8,0,1,0,15,5.47,7.84,7.84,0,0,1,1.18-2.13,8.76,8.76,0,0,1,12-1.59A7.91,7.91,0,0,1,63.93,159a7.64,7.64,0,0,1-1.57,5.78,1,1,0,0,0-.08.11L33.59,203.21A8,8,0,0,0,40,216H72a8,8,0,0,0,0-16H56l19.08-25.53A23.47,23.47,0,0,0,79.77,156.72Z"></path>
                     </svg>
-                        ${receita.ingredientes.length} ingredientes
+                        ${receita.ingredientes.length} ingrediente(s)
                     </span>
 
                 </div>
@@ -460,7 +464,7 @@ function initAbrirDetalhes(id){
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
                     <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
                 </svg>
-                <span class="text-sm">${receita.tempo}</span>
+                <span class="text-sm">${receita.tempo} min</span>
             </div>
             <div class="flex gap-1 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
@@ -493,8 +497,16 @@ function initAbrirDetalhes(id){
                  </li>`
             )).join('')}
         </ul>
+        
+        <div class="mt-8 flex gap-4 justify-end">
+            <button id="btn-cancelar-detalhes" class="border-2 border-marrom/70 text-preto/70 hover:border-marrom hover:text-fundo-branco hover:bg-marrom dark:border-fundo-branco/40 dark:text-fundo-branco px-6 py-2 rounded-full cursor-pointer transition-all duration-300">Sair</button>
+        </div>
     `
     document.getElementById('form-detalhes').classList.remove('hidden')
+
+    document.getElementById('btn-cancelar-detalhes').addEventListener('click', () => {
+        document.getElementById('form-detalhes').classList.add('hidden');
+    });
 }
 
 document.getElementById('form-detalhes').addEventListener('click', (event) => {
