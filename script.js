@@ -352,7 +352,7 @@ function renderizarReceitas(){
                 <div class="flex gap-4 py-2">
 
                     <span class="text-sm flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">4
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
                         <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
                         </svg> ${receita.tempo}
                     </span>
@@ -385,7 +385,7 @@ function renderizarReceitas(){
 }
 renderizarReceitas()
 
-// Manipula cliques na sessão de receitas para abrir detalhes, excluir ou editar.
+// Manipula cliques na seção de receitas para abrir detalhes, excluir ou editar.
 document.querySelector('section').addEventListener('click', (event) => {
     const target = event.target;
     const card = target.closest('.card');
@@ -457,8 +457,9 @@ function initAbrirDetalhes(id){
         
         <div class="flex gap-4 mt-2">
             <div class="flex gap-1 items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">4
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
                     <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
+                </svg>
                 <span class="text-sm">${receita.tempo}</span>
             </div>
             <div class="flex gap-1 items-center">
@@ -495,3 +496,9 @@ function initAbrirDetalhes(id){
     `
     document.getElementById('form-detalhes').classList.remove('hidden')
 }
+
+document.getElementById('form-detalhes').addEventListener('click', (event) => {
+    if (event.target === document.getElementById('form-detalhes')) {
+        document.getElementById('form-detalhes').classList.add('hidden');
+    }
+});
