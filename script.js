@@ -104,6 +104,7 @@
 // console.log(total)
 
 // tema dark
+// Inicializa o modo escuro com base na preferência salva do usuário
 function initDark(){
     const btn_dark = document.getElementById("btn-dark");
     const html = document.documentElement
@@ -120,6 +121,7 @@ function initDark(){
         icon.src = 'img/moon-duotone.svg'
     }
 
+    // Adiciona um ouvinte de evento para o botão de modo escuro, alternando o tema
     btn_dark.addEventListener("click", ()=>{
         html.classList.toggle('dark')
         const isDark = html.classList.contains('dark')
@@ -131,13 +133,15 @@ function initDark(){
 initDark()
 
 
-
+// Inicializa a funcionalidade de adicionar novos campos de entrada para ingredientes e preparo
 function initAddInput(idLista, idBotao, placeholder){
     const lista = document.getElementById(idLista)
     const btn_input = document.getElementById(idBotao)
 
+    // Estiliza os campos de entrada com base em seu conteúdo
     function estilizarInput(){
         const inputs = lista.querySelectorAll('input')
+        // Itera sobre os campos de entrada para aplicar estilos
         inputs.forEach(input => {
             if(input.value.trim() !== ''){
                 input.classList.remove('bg-marrom/50', 'border-marrom', 'text-preto')
@@ -146,6 +150,7 @@ function initAddInput(idLista, idBotao, placeholder){
         })
     }
 
+    // Adiciona um novo ingrediente ou etapa de preparo
     function addIngredient(){
         estilizarInput()
 
@@ -163,11 +168,13 @@ function initAddInput(idLista, idBotao, placeholder){
         lista.appendChild(li)
         atualizarNumero(lista)
 
+        // Manipula o evento de foco do campo de entrada
         input.addEventListener('focus', () => {
             input.classList.remove('input-preenchido', 'text-marrom', 'text-fundo-branco')
             input.classList.add('bg-fundo-branco', 'border-marrom', 'text-preto')
         })
 
+        // Manipula o evento de desfoque do campo de entrada
         input.addEventListener('blur', () => {
             if(input.value.trim() !== ''){
                 input.classList.add('input-preenchido')
@@ -190,8 +197,10 @@ function initAddInput(idLista, idBotao, placeholder){
         input.focus()
     }
 
+    // Atualiza os números dos itens da lista
     function atualizarNumero(lista){
         const itens = lista.querySelectorAll('li')
+        // Itera sobre os itens da lista para atualizar seus números
         itens.forEach((item, index) => {
             const span_numero = item.querySelector('.numero-item')
             if(span_numero){
@@ -203,10 +212,12 @@ function initAddInput(idLista, idBotao, placeholder){
     }
 
     if (btn_input) {
+        // Adiciona um ouvinte de evento para o botão, que chama addIngredient quando clicado
         btn_input.addEventListener('click', addIngredient);
         addIngredient();
     }
 
+    // Manipula a remoção de um item da lista
     lista.addEventListener('click', (event) => {
         const btnRemover = event.target.closest('.btn-remover');
         if (btnRemover) {
@@ -218,20 +229,24 @@ function initAddInput(idLista, idBotao, placeholder){
 initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
 initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
 
+// Mostra o modal de nova receita
 document.getElementById('nova-receita').addEventListener('click', () => {
     document.getElementById('form-modal').classList.remove('hidden')
 })
 
+// Esconde o modal de nova receita
 document.getElementById('btn-cancelar').addEventListener('click', () => {
     document.getElementById('form-modal').classList.add('hidden')
 })
 
+// Esconde o modal se o clique for fora do formulário
 document.getElementById('form-modal').addEventListener('click', (event) =>{
     if(event.target === document.getElementById('form-modal')){
         document.getElementById('form-modal').classList.add('hidden')
     }
 })
 
+// Salva a nova receita
 document.getElementById('btn-salvar').addEventListener('click', () => {
     const nome = document.getElementById('nome-receita').value
     const emoji = document.getElementById('emoji').value
@@ -249,6 +264,7 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
     console.log(nome, emoji, tipo, tempo, pessoas)
 
     const ingredientes = []
+    // Itera sobre os campos de entrada de ingredientes para obter seus valores
     document.querySelectorAll('#lista-ingredientes input').forEach((input) => {
         if(input.value.trim() !== ''){
             ingredientes.push(input.value.trim())
@@ -257,6 +273,7 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
     console.log(ingredientes)
 
     const preparo = []
+    // Itera sobre os campos de entrada de preparo para obter seus valores
     document.querySelectorAll('#lista-preparo input').forEach((input) => {
         if(input.value.trim() !== ''){
             preparo.push(input.value.trim())
@@ -295,11 +312,13 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
     initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
 })
 
+// Renderiza as receitas salvas na página
 function renderizarReceitas(){
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
     const section = document.querySelector('section')
     section.innerHTML = ''
 
+    // Itera sobre as receitas para criar um card para cada uma
     receitas.forEach(receita => {
         const card = document.createElement('div')
         card.dataset.id = receita.id
@@ -359,78 +378,79 @@ function renderizarReceitas(){
                     <button class="btn-editar bg-laranja-primary dark:bg-laranja-primary/30 dark:hover:bg-laranja-primary/70 dark:backdrop-blur-lg dark:border dark:border-white/20 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
                     <button data-id="${receita.id}" class="btn-apagar bg-[#CC3F3A] dark:bg-[#CC3F3A]/20 dark:hover:bg-[#CC3F3A]/70 dark:backdrop-blur-md dark:border dark:border-red-500/30 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
                 </div>`
-            section.appendChild(card)
+        section.appendChild(card)
     })
     const qtd = receitas.length
     document.querySelector('.qtd-receitas').textContent = qtd === 1 ? '1 receita' : `${qtd} receitas`
-
-    function initToggleMenu(){
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnMobile = document.querySelectorAll('.btn-opcoes-mobile')
-
-            btnMobile.forEach((botao) => {
-                botao.addEventListener('click', (event) => {
-                    event.stopPropagation()
-
-                    const menu= botao.nextElementSibling
-                    // fecha todos os menus que não são o botão clicado
-                    document.querySelectorAll('.menu-dropdown').forEach((m) => {
-                        if(m !== menu){
-                            m.classList.add('hidden')
-                        }
-                    })
-                    menu.classList.toggle('hidden')
-                })
-            })
-        })
-    }
-    initToggleMenu()
 }
 renderizarReceitas()
 
-// listener para apagar a receita e abrir a receita
+// Manipula cliques na sessão de receitas para abrir detalhes, excluir ou editar.
 document.querySelector('section').addEventListener('click', (event) => {
-    const btn_apagar = event.target.closest('.btn-apagar')
+    const target = event.target;
+    const card = target.closest('.card');
 
-    if(btn_apagar){
-        const id = +btn_apagar.dataset.id
+    // Se o clique não foi dentro de um card, não faz nada.
+    if (!card) return;
 
-        let receitas = JSON.parse(localStorage.getItem('receitas')) || []
-        receitas = receitas.filter(receita => receita.id !== id)
+    const id = +card.dataset.id;
+    const btnApagar = target.closest('.btn-apagar');
+    const btnEditar = target.closest('.btn-editar');
+    const btnMobile = target.closest('.btn-opcoes-mobile');
+    const menuDropdown = target.closest('.menu-dropdown');
 
-        localStorage.setItem('receitas', JSON.stringify(receitas))
-        renderizarReceitas()
+    // Se o botão de opções mobile for clicado
+    if (btnMobile) {
+        event.stopPropagation();
+        const menu = btnMobile.nextElementSibling;
+        // Fecha outros menus abertos
+        document.querySelectorAll('.menu-dropdown').forEach((m) => {
+            if (m !== menu) m.classList.add('hidden');
+        });
+        menu.classList.toggle('hidden');
+        return;
     }
 
-    // fecha o menu ao clicar fora
-    document.addEventListener('click', () => {
+    // Se o botão de apagar for clicado
+    if (btnApagar) {
+        let receitas = JSON.parse(localStorage.getItem('receitas')) || [];
+        receitas = receitas.filter(receita => receita.id !== id);
+        localStorage.setItem('receitas', JSON.stringify(receitas));
+        renderizarReceitas();
+        return;
+    }
+
+    // Se o botão de editar for clicado (funcionalidade a ser implementada)
+    if (btnEditar) {
+        console.log("Editar receita:", id);
+        // Futuramente, abriria o modal de edição.
+        return;
+    }
+
+    // Se o clique for no card (mas não nos botões ou no menu dropdown), abre os detalhes
+    if (card && !menuDropdown) {
+        initAbrirDetalhes(id);
+    }
+});
+
+// Fecha o menu dropdown se o clique for fora dele
+document.addEventListener('click', (event) => {
+    const isClickInsideMenu = event.target.closest('.menu-dropdown');
+    const isClickOnMobileButton = event.target.closest('.btn-opcoes-mobile');
+
+    if (!isClickInsideMenu && !isClickOnMobileButton) {
         document.querySelectorAll('.menu-dropdown').forEach((menu) => {
-            menu.classList.add('hidden')
-        })
-    })
+            menu.classList.add('hidden');
+        });
+    }
+});
 
-    document.querySelectorAll('.menu-dropdown').forEach((menu) => {
-        menu.addEventListener('click', (event) => {
-            event.stopPropagation()
-        })
-    })
 
-    document.querySelector('section').addEventListener('click', (event) => {
-        const card = event.target.closest('.card')
-        const btn_apagar = event.target.closest('.btn-apagar')
-        const btn_editar = event.target.closest('.btn-editar')
-        const btnMobile = event.target.closest('.btn-opcoes-mobile')
-
-        if(card && !btn_apagar && !btn_editar && !btnMobile){
-            const id = +card.dataset.id
-            initAbrirDetalhes(id)
-        }
-    })
-})
-
+// Abre o modal de detalhes da receita
 function initAbrirDetalhes(id){
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
     const receita = receitas.find(r => r.id === id)
+    // Preenche o modal com os detalhes da receita
     document.getElementById('conteudo-detalhes').innerHTML = `
         <div class="text-4xl mb-5">${receita.emoji}</div>
         <div class="text-3xl font-fran font-bold">${receita.nome}</div>
