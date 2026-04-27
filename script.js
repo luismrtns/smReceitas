@@ -257,15 +257,13 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
     const tipo = document.getElementById('tipo-receita').value
     const tempo = document.getElementById('tempo-receita').value
     const pessoas = document.getElementById('qtd-pessoas').value
-
+    // se o nome da receita tiver vazio, vai dar um aviso e não vai salvar
     if(nome.trim() === ''){
         document.getElementById('erro-nome').classList.remove('hidden')
         return
     }else{
         document.getElementById('erro-nome').classList.add('hidden')
     }
-
-    console.log(nome, emoji, tipo, tempo, pessoas)
 
     const ingredientes = []
     // Itera sobre os campos de entrada de ingredientes para obter seus valores
@@ -274,7 +272,6 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
             ingredientes.push(input.value.trim())
         }
     })
-    console.log(ingredientes)
 
     const preparo = []
     // Itera sobre os campos de entrada de preparo para obter seus valores
@@ -296,13 +293,10 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
         preparo
     }
 
-    console.log(receita)
-
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
     receitas.push(receita)
 
     localStorage.setItem('receitas', JSON.stringify(receitas))
-    console.log('salvo!', receitas)
 
     renderizarReceitas()
     document.getElementById('form-modal').classList.add('hidden')
@@ -324,6 +318,10 @@ function renderizarReceitas(){
 
     // Itera sobre as receitas para criar um card para cada uma
     receitas.forEach(receita => {
+        const iconeSalgado = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rounded-full bg-laranja-primary p-1 lucide lucide-soup-icon lucide-soup"><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M7 21h10"/><path d="M19.5 12 22 6"/><path d="M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62"/><path d="M11.25 3c.27.1.8.53.74 1.36-.05.83-.93 1.2-.98 2.02-.06.78.33 1.24.72 1.62"/><path d="M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62"/></svg>`;
+        const iconeDoce = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#faf6ed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rounded-full bg-marrom p-1 lucide lucide-dessert-icon lucide-dessert"><path d="M10.162 3.167A10 10 0 0 0 2 13a2 2 0 0 0 4 0v-1a2 2 0 0 1 4 0v4a2 2 0 0 0 4 0v-4a2 2 0 0 1 4 0v1a2 2 0 0 0 4-.006 10 10 0 0 0-8.161-9.826"/><path d="M20.804 14.869a9 9 0 0 1-17.608 0"/><circle cx="12" cy="4" r="2"/></svg>`;
+        const iconeTipo = receita.tipo === 'salgado' ? iconeSalgado : iconeDoce
+
         const card = document.createElement('div')
         card.dataset.id = receita.id
         card.className = 'card max-h-52 md:hover:max-h-96 bg-white dark:bg-white/10 dark:backdrop-blur-md dark:border dark:border-white/20 shadow-xl overflow-hidden p-4 rounded-xl w-full border-2 border-transparent transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer'
@@ -351,7 +349,10 @@ function renderizarReceitas(){
                 <!--informações do card-->
                 <div class="bg-fundo-branco dark:bg-fundo-branco/10 rounded-xl h-25 flex items-center justify-center text-5xl">${receita.emoji}</div>
 
-                <h2 class="mt-4 text-2xl font-fran font-bold">${receita.nome}</h2>
+                <div class="flex items-center mt-4 gap-2">
+                    <h2 class="text-2xl font-fran font-bold">${receita.nome}</h2>
+                    ${iconeTipo}
+                </div>
 
                 <div class="flex gap-4 py-2">
 
@@ -449,15 +450,20 @@ document.addEventListener('click', (event) => {
     }
 });
 
-
 // Abre o modal de detalhes da receita
 function initAbrirDetalhes(id){
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
     const receita = receitas.find(r => r.id === id)
+    const iconeSalgado = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rounded-full bg-laranja-primary p-1 lucide lucide-soup-icon lucide-soup"><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M7 21h10"/><path d="M19.5 12 22 6"/><path d="M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62"/><path d="M11.25 3c.27.1.8.53.74 1.36-.05.83-.93 1.2-.98 2.02-.06.78.33 1.24.72 1.62"/><path d="M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62"/></svg>`;
+    const iconeDoce = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#faf6ed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rounded-full bg-marrom p-1 lucide lucide-dessert-icon lucide-dessert"><path d="M10.162 3.167A10 10 0 0 0 2 13a2 2 0 0 0 4 0v-1a2 2 0 0 1 4 0v4a2 2 0 0 0 4 0v-4a2 2 0 0 1 4 0v1a2 2 0 0 0 4-.006 10 10 0 0 0-8.161-9.826"/><path d="M20.804 14.869a9 9 0 0 1-17.608 0"/><circle cx="12" cy="4" r="2"/></svg>`;
+    const iconeTipo = receita.tipo === 'salgado' ? iconeSalgado : iconeDoce
     // Preenche o modal com os detalhes da receita
     document.getElementById('conteudo-detalhes').innerHTML = `
         <div class="text-4xl mb-5">${receita.emoji}</div>
-        <div class="text-3xl font-fran font-bold">${receita.nome}</div>
+        <div class="flex items-center mt-4 gap-2">
+            <h3 class="text-3xl font-fran font-bold">${receita.nome}</h3>
+            ${iconeTipo}
+        </div>
         
         <div class="flex gap-4 mt-2">
             <div class="flex gap-1 items-center">
@@ -478,7 +484,7 @@ function initAbrirDetalhes(id){
         <ul class="mt-4 flex flex-col gap-2">
             ${receita.ingredientes.map((ingrediente, i) => (
                `<li class="flex gap-3 items-center">
-                    <span class="numero-item text-fundo-branco bg-marrom dark:bg-laranja-primary dark:text-marrom py-2 px-3.5 rounded-full font-semibold text-sm select-none">
+                    <span class="numero-item text-fundo-branco bg-marrom border-2 border-laranja-primary dark:border-fundo-branco dark:bg-laranja-primary dark:text-marrom py-2 px-3.5 rounded-full font-semibold text-sm select-none">
                         ${i + 1}
                     </span>
                     ${ingrediente}
@@ -490,7 +496,7 @@ function initAbrirDetalhes(id){
         <ul class="mt-4 flex flex-col gap-2">
             ${receita.preparo.map((etapa, i) => (
                 `<li class="flex gap-3 items-center">
-                    <span class="numero-item text-fundo-branco bg-marrom dark:bg-laranja-primary dark:text-marrom py-2 px-3.5 rounded-full font-semibold text-sm select-none">
+                    <span class="numero-item text-marrom dark:text-laranja-primary bg-transparent border-2 border-marrom dark:border-laranja-primary py-2 px-3.5 rounded-full font-semibold text-sm select-none">
                         ${i + 1}
                     </span>
                     <p class="text-sm">${etapa}</p>
