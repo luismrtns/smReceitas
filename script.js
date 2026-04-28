@@ -131,6 +131,8 @@ function initDark(){
 }
 initDark()
 
+let idEdicao = null
+
 // Inicializa a funcionalidade de adicionar novos campos de entrada para ingredientes e preparo
 function initAddInput(idLista, idBotao, placeholder){
     const lista = document.getElementById(idLista)
@@ -252,46 +254,6 @@ document.getElementById('form-detalhes').addEventListener('click', (event) => {
 
 // Salva a nova receita
 document.getElementById('btn-salvar').addEventListener('click', () => {
-    const nome = document.getElementById('nome-receita').value
-    const emoji = document.getElementById('emoji').value
-    const tipo = document.getElementById('tipo-receita').value
-    const tempo = document.getElementById('tempo-receita').value
-    const pessoas = document.getElementById('qtd-pessoas').value
-    // se o nome da receita tiver vazio, vai dar um aviso e não vai salvar
-    if(nome.trim() === ''){
-        document.getElementById('erro-nome').classList.remove('hidden')
-        return
-    }else{
-        document.getElementById('erro-nome').classList.add('hidden')
-    }
-
-    const ingredientes = []
-    // Itera sobre os campos de entrada de ingredientes para obter seus valores
-    document.querySelectorAll('#lista-ingredientes input').forEach((input) => {
-        if(input.value.trim() !== ''){
-            ingredientes.push(input.value.trim())
-        }
-    })
-
-    const preparo = []
-    // Itera sobre os campos de entrada de preparo para obter seus valores
-    document.querySelectorAll('#lista-preparo input').forEach((input) => {
-        if(input.value.trim() !== ''){
-            preparo.push(input.value.trim())
-        }
-    })
-    console.log(preparo)
-
-    const receita = {
-        id: Date.now(),
-        nome,
-        emoji,
-        tipo,
-        tempo,
-        pessoas,
-        ingredientes,
-        preparo
-    }
 
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
     receitas.push(receita)
@@ -309,6 +271,52 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
     initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
     initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
 })
+
+function salvarReceita(event){
+    event.preventDefault()
+
+    const nome = document.getElementById('nome-receita').value;
+    const emoji = document.getElementById('emoji').value;
+    const tipo = document.getElementById('tipo-receita').value;
+    const tempo = document.getElementById('tempo-receita').value;
+    const pessoas = document.getElementById('qtd-pessoas').value;
+
+    // se o nome da receita tiver vazio, vai dar um aviso e não vai salvar
+    if(nome.trim() === ''){
+        document.getElementById('erro-nome').classList.remove('hidden')
+        return
+    }else{
+        document.getElementById('erro-nome').classList.add('hidden')
+    }
+
+    const ingredientes = []
+    document.querySelectorAll('#lista-ingredientes input').forEach((input) => {
+        if(input.value.trim() !== ''){
+            ingredientes.push(input.value.trim())
+        }
+    })
+
+    const preparo = []
+    document.querySelectorAll('#lista-preparo input').forEach((input) => {
+        if(input.value.trim() !== ''){
+            preparo.push(input.value.trim())
+        }
+    })
+
+    const receita = {
+        id: idEdicao ? idEdicao : Date.now(),
+        nome,
+        emoji,
+        tipo,
+        tempo,
+        pessoas,
+        ingredientes,
+        preparo
+    }
+
+    const receitas = JSON.parse(localStorage.getItem('receitas')) || []
+
+}
 
 // Renderiza as receitas salvas na página
 function renderizarReceitas(filtro = 'todos'){
@@ -395,6 +403,7 @@ function renderizarReceitas(filtro = 'todos'){
 }
 renderizarReceitas()
 
+// Função para filtrar as receitas por tipo
 function initFiltro() {
     const btnTodos = document.getElementById('btn-todos');
     const btnSalgados = document.getElementById('btn-salgados');
@@ -491,8 +500,7 @@ document.querySelector('section').addEventListener('click', (event) => {
 
     // Se o botão de editar for clicado (funcionalidade a ser implementada)
     if (btnEditar) {
-        console.log("Editar receita:", id);
-        // Futuramente, abriria o modal de edição.
+        initAbrirEdicao(id)
         return;
     }
 
@@ -584,3 +592,38 @@ document.getElementById('form-detalhes').addEventListener('click', (event) => {
         document.getElementById('form-detalhes').classList.add('hidden');
     }
 });
+
+function initAbrirEdicao(id){
+    const receitas = JSON.parse(localStorage.getItem('receitas')) || []
+    const receita = receitas.find(r => r.id === id)
+
+    if(!receita) return
+
+    idEdicao = id
+
+    document.getElementById('nome-receita').value = receita.nome
+    document.getElementById('emoji').value = receita.emoji
+    document.getElementById('tipo-receita').value = receita.tipo
+    document.getElementById('tempo-receita').value = receita.tempo
+    document.getElementById('qtd-pessoas').value = receita.pessoas
+
+    const listaIngredientes = document.getElementById('lista-ingredientes')
+    const listaPreparo = document.getElementById('lista-preparo')
+
+    listaIngredientes.innerHTML = ''
+    listaPreparo.innerHTML = ''
+
+    receita.ingredientes.forEach((ingrediente) => {
+        initAddInput('lista-ingredientes', 'btn-input', ingrediente)
+    })
+
+    receita.preparo.forEach((etapa) => {
+        initAddInput('lista-ingredientes', 'btn-preparo', etapa)
+    })
+
+    document.querySelector('#form-modal h2').textContent = 'Editar receita'
+    document.querySelector('#btn-salvar').textContent = 'Salvar alterações'
+
+    document.getElementById('form-modal').classList.remove('hidden')
+}
+initAbrirEdicao()
