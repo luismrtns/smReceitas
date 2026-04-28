@@ -311,13 +311,18 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
 })
 
 // Renderiza as receitas salvas na página
-function renderizarReceitas(){
+function renderizarReceitas(filtro = 'todos'){
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
     const section = document.querySelector('section')
     section.innerHTML = ''
 
+    const receitasFiltradas = receitas.filter(receita => {
+        if(filtro === 'todos') return true
+        return receita.tipo === filtro
+    })
+
     // Itera sobre as receitas para criar um card para cada uma
-    receitas.forEach(receita => {
+    receitasFiltradas.forEach(receita => {
         const iconeSalgado = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rounded-full bg-laranja-primary p-1 lucide lucide-soup-icon lucide-soup"><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M7 21h10"/><path d="M19.5 12 22 6"/><path d="M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62"/><path d="M11.25 3c.27.1.8.53.74 1.36-.05.83-.93 1.2-.98 2.02-.06.78.33 1.24.72 1.62"/><path d="M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62"/></svg>`;
         const iconeDoce = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#faf6ed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rounded-full bg-marrom p-1 lucide lucide-dessert-icon lucide-dessert"><path d="M10.162 3.167A10 10 0 0 0 2 13a2 2 0 0 0 4 0v-1a2 2 0 0 1 4 0v4a2 2 0 0 0 4 0v-4a2 2 0 0 1 4 0v1a2 2 0 0 0 4-.006 10 10 0 0 0-8.161-9.826"/><path d="M20.804 14.869a9 9 0 0 1-17.608 0"/><circle cx="12" cy="4" r="2"/></svg>`;
         const iconeTipo = receita.tipo === 'salgado' ? iconeSalgado : iconeDoce
@@ -385,7 +390,7 @@ function renderizarReceitas(){
                 </div>`
         section.appendChild(card)
     })
-    const qtd = receitas.length
+    const qtd = receitasFiltradas.length
     document.querySelector('.qtd-receitas').textContent = qtd === 1 ? '1 receita' : `${qtd} receitas`
 }
 renderizarReceitas()
@@ -530,3 +535,17 @@ document.getElementById('form-detalhes').addEventListener('click', (event) => {
         document.getElementById('form-detalhes').classList.add('hidden');
     }
 });
+
+function initFiltro(){
+
+    document.getElementById('btn-todos').addEventListener('click', () => {
+        renderizarReceitas('todos')
+    })
+    document.getElementById('btn-salgados').addEventListener('click', () => {
+         renderizarReceitas('salgado')
+    })
+    document.getElementById('btn-doces').addEventListener('click', () => {
+        renderizarReceitas('doce')
+    })
+}
+initFiltro()
