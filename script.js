@@ -253,25 +253,6 @@ document.getElementById('form-detalhes').addEventListener('click', (event) => {
 })
 
 // Salva a nova receita
-document.getElementById('btn-salvar').addEventListener('click', () => {
-
-    const receitas = JSON.parse(localStorage.getItem('receitas')) || []
-    receitas.push(receita)
-
-    localStorage.setItem('receitas', JSON.stringify(receitas))
-
-    renderizarReceitas()
-    document.getElementById('form-modal').classList.add('hidden')
-    document.getElementById('nome-receita').value = ''
-    document.getElementById('emoji').value = ''
-    document.getElementById('tempo-receita').value = ''
-    document.getElementById('qtd-pessoas').value = ''
-    document.getElementById('lista-ingredientes').innerHTML = ''
-    document.getElementById('lista-preparo').innerHTML = ''
-    initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
-    initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
-})
-
 function salvarReceita(event){
     event.preventDefault()
 
@@ -316,7 +297,30 @@ function salvarReceita(event){
 
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
 
+    if(idEdicao){
+        const index = receitas.findIndex(r => r.id === idEdicao)
+        if(index !== -1){
+            receitas[index] = receita
+        }
+        idEdicao = null // vai limpar a memória depois de usar
+    }else{
+        receitas.push(receita)
+    }
+    // salva no banco de dados e atualiza a tela
+    localStorage.setItem('receitas', JSON.stringify(receitas))
+    renderizarReceitas()
+
+    document.getElementById('form-modal').classList.add('hidden');
+    document.getElementById('nome-receita').value = '';
+    document.getElementById('emoji').value = '';
+    document.getElementById('tempo-receita').value = '';
+    document.getElementById('qtd-pessoas').value = '';
+    document.getElementById('lista-ingredientes').innerHTML = '';
+    document.getElementById('lista-preparo').innerHTML = '';
+    initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz');
+    initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...');
 }
+document.getElementById('btn-salvar').addEventListener('click', salvarReceita)
 
 // Renderiza as receitas salvas na página
 function renderizarReceitas(filtro = 'todos'){
@@ -500,6 +504,7 @@ document.querySelector('section').addEventListener('click', (event) => {
 
     // Se o botão de editar for clicado (funcionalidade a ser implementada)
     if (btnEditar) {
+        event.stopPropagation()
         initAbrirEdicao(id)
         return;
     }
@@ -608,22 +613,40 @@ function initAbrirEdicao(id){
     document.getElementById('qtd-pessoas').value = receita.pessoas
 
     const listaIngredientes = document.getElementById('lista-ingredientes')
-    const listaPreparo = document.getElementById('lista-preparo')
-
     listaIngredientes.innerHTML = ''
-    listaPreparo.innerHTML = ''
-
     receita.ingredientes.forEach((ingrediente) => {
-        initAddInput('lista-ingredientes', 'btn-input', ingrediente)
+        initInputComValor('lista-ingredientes', 'btn-input', ingrediente)
     })
 
+    const listaPreparo = document.getElementById('lista-preparo')
+    listaPreparo.innerHTML = ''
     receita.preparo.forEach((etapa) => {
-        initAddInput('lista-ingredientes', 'btn-preparo', etapa)
+        initInputComValor('lista-ingredientes', 'btn-preparo', etapa)
     })
-
-    document.querySelector('#form-modal h2').textContent = 'Editar receita'
+    const tituloModal = document.querySelector('#form-modal h2')
+    if(tituloModal) tituloModal.textContent = 'Editar receita'
     document.querySelector('#btn-salvar').textContent = 'Salvar alterações'
 
     document.getElementById('form-modal').classList.remove('hidden')
 }
 initAbrirEdicao()
+
+function initInputComValor(idLista, placeholder, valor){
+    const lista = document.getElementById(idLista)
+    const li = document.createElement('li')
+    li.className = 'flex items-center gap-2 relative group'
+    li.innerHTML = `
+                <span class="numero-item text-fundo-branco bg-marrom dark:bg-laranja-primary dark:text-marrom py-2 px-3.5 rounded-full font-semibold text-sm select-none mt-4"></span>
+        <input type="text" value="${valor}" placeholder="${placeholder}" 
+               class="mt-4 w-full bg-fundo-branco dark:bg-fundo-branco/10 dark:text-fundo-branco border border-marrom/60 dark:border-fundo-branco/20 rounded-full px-4 py-2 focus:outline-none focus:border-laranja-primary transition-colors input-preenchido">
+        <button type="button" class="btn-remover mt-4 text-marrom dark:text-fundo-branco hover:bg-[#CC3F3A] hover:text-fundo-branco p-2 rounded-full cursor-pointer transition-colors">
+            <svg class="w-5 h-5 pointer-events-none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    `
+    lista.appendChild(li)
+
+    const itens = lista.querySelectorAll('li')
+    itens.forEach((item, index) => {
+        item.querySelector('.numero-item').textContent = `${index + 1}`
+    })
+}
