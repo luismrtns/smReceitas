@@ -395,6 +395,55 @@ function renderizarReceitas(filtro = 'todos'){
 }
 renderizarReceitas()
 
+function initFiltro() {
+    const btnTodos = document.getElementById('btn-todos');
+    const btnSalgados = document.getElementById('btn-salgados');
+    const btnDoces = document.getElementById('btn-doces');
+
+    const estiloAtivo = ['bg-laranja-primary', 'text-fundo-branco', 'dark:bg-laranja-primary', 'dark:text-preto'];
+
+    const estiloInativo = ['bg-transparent', 'text-preto/70', 'dark:text-fundo-branco/70'];
+
+    //Função para limpar os estilos dos botões
+    function limparCoresBotoes() {
+        btnTodos.classList.remove(...estiloAtivo);
+        btnSalgados.classList.remove(...estiloAtivo);
+        btnDoces.classList.remove(...estiloAtivo);
+
+        btnTodos.classList.add(...estiloInativo);
+        btnSalgados.classList.add(...estiloInativo);
+        btnDoces.classList.add(...estiloInativo);
+    }
+
+    // Função que pinta apenas o botão que foi clicado
+    function ativarBotao(btnClicado) {
+        limparCoresBotoes();
+
+        btnClicado.classList.remove(...estiloInativo);
+        btnClicado.classList.add(...estiloAtivo);
+    }
+
+    if (btnTodos && btnSalgados && btnDoces) {
+        btnTodos.addEventListener('click', () => {
+            renderizarReceitas('todos');
+            ativarBotao(btnTodos);
+        });
+
+        btnSalgados.addEventListener('click', () => {
+            renderizarReceitas('salgado');
+            ativarBotao(btnSalgados);
+        });
+
+        btnDoces.addEventListener('click', () => {
+            renderizarReceitas('doce');
+            ativarBotao(btnDoces);
+        });
+
+        ativarBotao(btnTodos);
+    }
+}
+initFiltro()
+
 // Manipula cliques na seção de receitas para abrir detalhes, excluir ou editar.
 document.querySelector('section').addEventListener('click', (event) => {
     const target = event.target;
@@ -535,17 +584,3 @@ document.getElementById('form-detalhes').addEventListener('click', (event) => {
         document.getElementById('form-detalhes').classList.add('hidden');
     }
 });
-
-function initFiltro(){
-
-    document.getElementById('btn-todos').addEventListener('click', () => {
-        renderizarReceitas('todos')
-    })
-    document.getElementById('btn-salgados').addEventListener('click', () => {
-         renderizarReceitas('salgado')
-    })
-    document.getElementById('btn-doces').addEventListener('click', () => {
-        renderizarReceitas('doce')
-    })
-}
-initFiltro()
