@@ -229,8 +229,29 @@ function initAddInput(idLista, idBotao, placeholder){
 initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
 initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
 
+function resetarBotao(id){
+    const btn = document.getElementById(id)
+    const clone = btn.cloneNode(true)
+    btn.parentNode.replaceChild(clone, btn)
+}
+
 // Mostra o modal de nova receita
 document.getElementById('nova-receita').addEventListener('click', () => {
+    idEdicao = null
+    document.getElementById('nova-receita').value = ''
+    document.getElementById('emoji').value = ''
+    document.getElementById('tempo-receita').value = ''
+    document.getElementById('qtd-pessoas').value = ''
+    document.getElementById('lista-ingredientes').innerHTML = ''
+    document.getElementById('lista-preparo').innerHTML = ''
+
+    const tituloModal = document.querySelector('#form-modal h2')
+    if(tituloModal) tituloModal.textContent = 'Nova receita'
+    document.querySelector('#btn-salvar').textContent = 'Salvar'
+    resetarBotao('btn-input')
+    resetarBotao('btn-preparo')
+    initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
+    initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
     document.getElementById('form-modal').classList.remove('hidden')
 })
 
@@ -317,6 +338,10 @@ function salvarReceita(event){
     document.getElementById('qtd-pessoas').value = '';
     document.getElementById('lista-ingredientes').innerHTML = '';
     document.getElementById('lista-preparo').innerHTML = '';
+
+    resetarBotao('btn-input')
+    resetarBotao('btn-preparo')
+
     initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz');
     initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...');
 }
@@ -621,7 +646,7 @@ function initAbrirEdicao(id){
     const listaPreparo = document.getElementById('lista-preparo')
     listaPreparo.innerHTML = ''
     receita.preparo.forEach((etapa) => {
-        initInputComValor('lista-ingredientes', 'btn-preparo', etapa)
+        initInputComValor('lista-preparo', 'btn-preparo', etapa)
     })
     const tituloModal = document.querySelector('#form-modal h2')
     if(tituloModal) tituloModal.textContent = 'Editar receita'
@@ -629,7 +654,6 @@ function initAbrirEdicao(id){
 
     document.getElementById('form-modal').classList.remove('hidden')
 }
-initAbrirEdicao()
 
 function initInputComValor(idLista, placeholder, valor){
     const lista = document.getElementById(idLista)
