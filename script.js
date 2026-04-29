@@ -235,6 +235,23 @@ function resetarBotao(id){
     btn.parentNode.replaceChild(clone, btn)
 }
 
+function mostrarToast(mensagem, tipo = 'sucesso'){
+   const toast = document.createElement('div')
+    toast.className = `fixed bottom-6 right-6 z-50 px-5 py-3 rounded-full font-semibold text-sm shadow-lg transition-all duration-300 opacity-0 translate-y-4 
+    ${tipo === 'sucesso' ? 'bg-laranja-primary text-preto' : 'bg-[#CC3F3A] text-fundo-branco'}`
+    toast.textContent = mensagem
+    document.body.appendChild(toast)
+
+    requestAnimationFrame(() => {
+        toast.classList.remove('opacity-0', 'translate-y-4')
+    })
+
+    setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-4')
+        setTimeout(() => toast.remove(), 300)
+    }, 3000)
+}
+
 // Mostra o modal de nova receita
 document.getElementById('nova-receita').addEventListener('click', () => {
     idEdicao = null
@@ -317,6 +334,7 @@ function salvarReceita(event){
     }
 
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
+    const estaEditado = !!idEdicao
 
     if(idEdicao){
         const index = receitas.findIndex(r => r.id === idEdicao)
@@ -330,6 +348,14 @@ function salvarReceita(event){
     // salva no banco de dados e atualiza a tela
     localStorage.setItem('receitas', JSON.stringify(receitas))
     renderizarReceitas()
+
+
+    if(estaEditado){
+        mostrarToast('Receita editada!')
+    }else{
+        mostrarToast('Receita criada!')
+    }
+    idEdicao = null
 
     document.getElementById('form-modal').classList.add('hidden');
     document.getElementById('nome-receita').value = '';
@@ -535,6 +561,7 @@ document.querySelector('section').addEventListener('click', (event) => {
                 localStorage.setItem('receitas', JSON.stringify(receitas));
 
                 renderizarReceitas();
+                mostrarToast('Receita excluída!', 'erro')
             }, 300);
         }
         return;
