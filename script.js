@@ -367,62 +367,76 @@ function renderizarReceitas(filtro = 'todos'){
         card.dataset.id = receita.id
         card.className = 'card max-h-52 md:hover:max-h-96 bg-white dark:bg-white/5 dark:backdrop-blur-lg dark:border dark:border-white/20 shadow-xl overflow-hidden p-4 rounded-xl w-full border-2 border-preto/10 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer'
         card.innerHTML = `
-                <!--menu mobile-->
-                <div class="relative flex justify-end md:hidden">
-
-                    <button class="btn-opcoes-mobile p-1 absolute hover:text-laranja-primary cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="fill-preto dark:fill-fundo-branco hover:fill-laranja-primary" viewBox="0 0 256 256">
+    
+                <!--mobile-->
+                <div class="flex items-start gap-4 mt-2 md:hidden">
+                    <div class="bg-fundo-branco dark:bg-fundo-branco/10 border-2 border-preto/15 dark:border-fundo-branco/15 rounded-full w-16 h-16 shrink-0 flex items-center justify-center text-3xl">
+                        ${receita.emoji}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-xl font-fran font-bold truncate">${receita.nome}</h2>
+                            
+                        </div>
+                        <div class="flex flex-wrap gap-3 mt-2">
+                            <span class="text-sm flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path></svg>
+                                ${receita.tempo} min
+                            </span>
+                            <span class="text-sm flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path></svg>
+                                ${receita.pessoas} pessoa(s)
+                            </span>
+                            <span class="text-sm flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM104,72H216a8,8,0,0,0,0-16H104a8,8,0,0,0,0,16ZM216,184H104a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM43.58,55.16,48,52.94V104a8,8,0,0,0,16,0V40a8,8,0,0,0-11.58-7.16l-16,8a8,8,0,0,0,7.16,14.32ZM79.77,156.72a23.73,23.73,0,0,0-9.6-15.95,24.86,24.86,0,0,0-34.11,4.7,23.63,23.63,0,0,0-3.57,6.46,8,8,0,1,0,15,5.47,7.84,7.84,0,0,1,1.18-2.13,8.76,8.76,0,0,1,12-1.59A7.91,7.91,0,0,1,63.93,159a7.64,7.64,0,0,1-1.57,5.78,1,1,0,0,0-.08.11L33.59,203.21A8,8,0,0,0,40,216H72a8,8,0,0,0,0-16H56l19.08-25.53A23.47,23.47,0,0,0,79.77,156.72Z"></path></svg>
+                                ${receita.ingredientes.length} ingrediente(s)
+                            </span>
+                            ${iconeTipo}
+                        </div>
+                    </div>
+                    <!--botão opções mobile-->
+                    <button class="btn-opcoes-mobile p-1 shrink-0 hover:text-laranja-primary cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
                             <path d="M128,72a16,16,0,1,0-16-16A16,16,0,0,0,128,72Zm0,40a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,72a16,16,0,1,0,16,16A16,16,0,0,0,128,184Z"></path>
                         </svg>
                     </button>
-
-                    <div class="menu-dropdown hidden absolute right-0 top-10 bg-white dark:bg-marrom border border-gray-200 dark:border-white/10 rounded-xl shadow-lg p-2 z-20 min-w-35">
+                    <div class="menu-dropdown hidden absolute right-4 top-4 bg-white dark:bg-marrom border border-gray-200 dark:border-white/10 rounded-xl shadow-lg p-2 z-20 min-w-35">
                         <button class="btn-editar flex items-center gap-2 px-4 py-2 text-sm w-full rounded-lg hover:bg-fundo-branco dark:hover:bg-white/10 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z"></path>
-                            </svg> Editar
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z"></path></svg>
+                            Editar
                         </button>
                         <button data-id="${receita.id}" class="btn-apagar flex items-center gap-2 px-4 py-2 text-sm w-full text-[#CC3F3A] rounded-lg hover:bg-red-50 dark:hover:bg-[#CC3F3A]/20 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-[#CC3F3A]" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path>
-                            </svg> Excluir
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-[#CC3F3A]" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg>
+                            Excluir
                         </button>
                     </div>
                 </div>
-                <!--informações do card-->
-                <div class="bg-fundo-branco dark:bg-fundo-branco/10 rounded-xl h-25 flex items-center justify-center text-5xl">${receita.emoji}</div>
-
-                <div class="flex items-center mt-4 gap-2">
-                    <h2 class="text-2xl font-fran font-bold">${receita.nome}</h2>
-                    ${iconeTipo}
-                </div>
-
-                <div class="flex gap-4 py-2">
-
-                    <span class="text-sm flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
-                        <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
-                        </svg> ${receita.tempo} min
-                    </span>
-
-                    <span class="text-sm flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
-                            <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
-                        </svg>
-                        ${receita.pessoas} pessoa(s)
-                    </span>
-
-                    <span class="text-sm flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
-                        <path d="M224,128a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM104,72H216a8,8,0,0,0,0-16H104a8,8,0,0,0,0,16ZM216,184H104a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM43.58,55.16,48,52.94V104a8,8,0,0,0,16,0V40a8,8,0,0,0-11.58-7.16l-16,8a8,8,0,0,0,7.16,14.32ZM79.77,156.72a23.73,23.73,0,0,0-9.6-15.95,24.86,24.86,0,0,0-34.11,4.7,23.63,23.63,0,0,0-3.57,6.46,8,8,0,1,0,15,5.47,7.84,7.84,0,0,1,1.18-2.13,8.76,8.76,0,0,1,12-1.59A7.91,7.91,0,0,1,63.93,159a7.64,7.64,0,0,1-1.57,5.78,1,1,0,0,0-.08.11L33.59,203.21A8,8,0,0,0,40,216H72a8,8,0,0,0,0-16H56l19.08-25.53A23.47,23.47,0,0,0,79.77,156.72Z"></path>
-                    </svg>
-                        ${receita.ingredientes.length} ingrediente(s)
-                    </span>
-
-                </div>
-
-                <!--botões desktop-->
-                <div class="hidden md:flex gap-2 justify-center mt-4">
-                    <button class="btn-editar bg-laranja-primary dark:bg-laranja-primary/30 dark:hover:bg-laranja-primary/70 dark:backdrop-blur-lg dark:border dark:border-white/20 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
-                    <button data-id="${receita.id}" class="btn-apagar bg-[#CC3F3A] dark:bg-[#CC3F3A]/20 dark:hover:bg-[#CC3F3A]/70 dark:backdrop-blur-md dark:border dark:border-red-500/30 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
+            
+                <!--desktop: layout original-->
+                <div class="hidden md:block">
+                    <div class="bg-fundo-branco dark:bg-fundo-branco/10 border-2 border-preto/15 dark:border-fundo-branco/15 rounded-xl h-25 flex items-center justify-center text-5xl">${receita.emoji}</div>
+                    <div class="flex items-center mt-4 gap-2">
+                        <h2 class="text-2xl font-fran font-bold truncate">${receita.nome}</h2>
+                        ${iconeTipo}
+                    </div>
+                    <div class="flex gap-4 py-2">
+                        <span class="text-sm flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path></svg>
+                            ${receita.tempo} min
+                        </span>
+                        <span class="text-sm flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path></svg>
+                            ${receita.pessoas} pessoa(s)
+                        </span>
+                        <span class="text-sm flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM104,72H216a8,8,0,0,0,0-16H104a8,8,0,0,0,0,16ZM216,184H104a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM43.58,55.16,48,52.94V104a8,8,0,0,0,16,0V40a8,8,0,0,0-11.58-7.16l-16,8a8,8,0,0,0,7.16,14.32ZM79.77,156.72a23.73,23.73,0,0,0-9.6-15.95,24.86,24.86,0,0,0-34.11,4.7,23.63,23.63,0,0,0-3.57,6.46,8,8,0,1,0,15,5.47,7.84,7.84,0,0,1,1.18-2.13,8.76,8.76,0,0,1,12-1.59A7.91,7.91,0,0,1,63.93,159a7.64,7.64,0,0,1-1.57,5.78,1,1,0,0,0-.08.11L33.59,203.21A8,8,0,0,0,40,216H72a8,8,0,0,0,0-16H56l19.08-25.53A23.47,23.47,0,0,0,79.77,156.72Z"></path></svg>
+                            ${receita.ingredientes.length} ingrediente(s)
+                        </span>
+                    </div>
+                    <div class="flex gap-2 justify-center mt-4">
+                        <button class="btn-editar bg-laranja-primary dark:bg-laranja-primary/30 dark:hover:bg-laranja-primary/70 dark:backdrop-blur-lg dark:border dark:border-white/20 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
+                        <button data-id="${receita.id}" class="btn-apagar bg-[#CC3F3A] dark:bg-[#CC3F3A]/20 dark:hover:bg-[#CC3F3A]/70 dark:backdrop-blur-md dark:border dark:border-red-500/30 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
+                    </div>
                 </div>`
         section.appendChild(card)
     })
@@ -562,8 +576,8 @@ function initAbrirDetalhes(id){
     document.getElementById('conteudo-detalhes').innerHTML = `
         <div class="text-4xl mb-5">${receita.emoji}</div>
         <div class="flex items-center mt-4 gap-2">
-            <h3 class="text-3xl font-fran font-bold">${receita.nome}</h3>
-            ${iconeTipo}
+            <h3 class="text-2xl md:text-3xl font-fran font-bold">${receita.nome}</h3>
+            
         </div>
         
         <div class="flex gap-4 mt-2">
@@ -579,6 +593,7 @@ function initAbrirDetalhes(id){
                 </svg>
                 <span class="text-sm">${receita.pessoas} pessoa(s)</span>
             </div>
+            ${iconeTipo}
         </div>
         
         <h2 class="text-xl font-semibold mt-4 font-fran">Ingredientes</h2>
