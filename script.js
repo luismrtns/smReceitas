@@ -238,7 +238,7 @@ function resetarBotao(id){
 // Mostra o modal de nova receita
 document.getElementById('nova-receita').addEventListener('click', () => {
     idEdicao = null
-    document.getElementById('nova-receita').value = ''
+    document.getElementById('nome-receita').value = ''
     document.getElementById('emoji').value = ''
     document.getElementById('tempo-receita').value = ''
     document.getElementById('qtd-pessoas').value = ''
@@ -345,7 +345,6 @@ function salvarReceita(event){
     initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz');
     initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...');
 }
-document.getElementById('btn-salvar').addEventListener('click', salvarReceita)
 
 // Renderiza as receitas salvas na página
 function renderizarReceitas(filtro = 'todos'){
