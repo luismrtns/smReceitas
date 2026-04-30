@@ -269,26 +269,36 @@ document.getElementById('nova-receita').addEventListener('click', () => {
     resetarBotao('btn-preparo')
     initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
     initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
-    document.getElementById('form-modal').classList.remove('hidden')
+    initModalForm()
 })
+
+function initModalForm(){
+    const fundo = document.getElementById('form-modal')
+    const caixa = document.getElementById('conteudo-form')
+
+    fundo.classList.remove('hidden')
+    setTimeout(() => {
+        fundo.classList.replace('opacity-0', 'opacity-100')
+        caixa.classList.remove('scale-90', 'translate-y-4', 'opacity-0')
+        caixa.classList.add('scale-100', 'translate-y-0', 'opacity-100')
+    }, 10)
+}
+
+function initFecharForm(){
+    const fundo = document.getElementById('form-modal')
+    const caixa = document.getElementById('conteudo-form')
+
+    fundo.classList.replace('opacity-100', 'opacity-0')
+    caixa.classList.remove('scale-100', 'translate-y-0', 'opacity-100')
+    caixa.classList.add('scale-90', 'translate-y-4', 'opacity-0')
+
+    setTimeout(() => {
+        fundo.classList.add('hidden')
+    },300)
+}
 
 // Esconde o modal de nova receita
-document.getElementById('btn-cancelar').addEventListener('click', () => {
-    document.getElementById('form-modal').classList.add('hidden')
-})
-
-// Esconde o modal se o clique for fora do formulário
-document.getElementById('form-modal').addEventListener('click', (event) =>{
-    if(event.target === document.getElementById('form-modal')){
-        document.getElementById('form-modal').classList.add('hidden')
-    }
-})
-// Esconde o modal se o clique for fora do formulário
-document.getElementById('form-detalhes').addEventListener('click', (event) => {
-    if(event.target === document.getElementById('form-detalhes')){
-        document.getElementById('form-detalhes').classList.add('hidden')
-    }
-})
+document.getElementById('btn-cancelar').addEventListener('click', initFecharForm)
 
 // Salva a nova receita
 function salvarReceita(event){
@@ -357,7 +367,7 @@ function salvarReceita(event){
     }
     idEdicao = null
 
-    document.getElementById('form-modal').classList.add('hidden');
+    initFecharForm();
     document.getElementById('nome-receita').value = '';
     document.getElementById('emoji').value = '';
     document.getElementById('tempo-receita').value = '';
@@ -681,7 +691,16 @@ function initFecharDetalhes(){
     }, 300)
 }
 
-document.getElementById('form-detalhes').addEventListener('click', initFecharDetalhes);
+document.getElementById('form-detalhes').addEventListener('click', (event) =>{
+    if (event.target === document.getElementById('form-detalhes')) {
+        initFecharDetalhes();
+    }
+});
+document.getElementById('form-modal').addEventListener('click', (event) =>{
+    if (event.target === document.getElementById('form-modal')) {
+        initFecharForm();
+    }
+})
 
 function initAbrirEdicao(id){
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
@@ -712,7 +731,7 @@ function initAbrirEdicao(id){
     if(tituloModal) tituloModal.textContent = 'Editar receita'
     document.querySelector('#btn-salvar').textContent = 'Salvar alterações'
 
-    document.getElementById('form-modal').classList.remove('hidden')
+    initModalForm()
 }
 
 function initInputComValor(idLista, placeholder, valor){
