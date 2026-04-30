@@ -653,16 +653,35 @@ function initAbrirDetalhes(id){
     `
     document.getElementById('form-detalhes').classList.remove('hidden')
 
-    document.getElementById('btn-cancelar-detalhes').addEventListener('click', () => {
-        document.getElementById('form-detalhes').classList.add('hidden');
-    });
+    const fundo = document.getElementById('form-detalhes')
+    const caixa = document.getElementById('conteudo-detalhes')
+
+    fundo.classList.remove('hidden')
+
+    setTimeout(() => {
+        fundo.classList.replace('opacity-0', 'opacity-100')
+
+        caixa.classList.remove('scale-90', 'translate-y-4', 'opacity-0')
+        caixa.classList.add('scale-100', 'translate-y-0', 'opacity-100')
+    }, 10)
+
+    document.getElementById('btn-cancelar-detalhes').addEventListener('click', initFecharDetalhes);
 }
 
-document.getElementById('form-detalhes').addEventListener('click', (event) => {
-    if (event.target === document.getElementById('form-detalhes')) {
-        document.getElementById('form-detalhes').classList.add('hidden');
-    }
-});
+function initFecharDetalhes(){
+    const fundo = document.getElementById('form-detalhes')
+    const caixa = document.getElementById('conteudo-detalhes')
+
+    fundo.classList.replace('opacity-100', 'opacity-0')
+    caixa.classList.remove('scale-100', 'translate-y-0', 'opacity-100')
+    caixa.classList.add('scale-90', 'translate-y-4', 'opacity-0')
+
+    setTimeout(() => {
+        fundo.classList.add('hidden')
+    }, 300)
+}
+
+document.getElementById('form-detalhes').addEventListener('click', initFecharDetalhes);
 
 function initAbrirEdicao(id){
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
