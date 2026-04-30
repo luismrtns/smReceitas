@@ -22,7 +22,8 @@
     <div class="bg-marrom border-b border-b-laranja-primary">
         <header class="relative flex justify-between items-center py-4 max-w-6xl mx-auto px-6 shadow-lg">
             <div class="flex items-center gap-2">
-                <h1 class="text-fundo-branco hidden md:flex md:text-4xl font-fran md:items-center">Receitas da Mimia</h1>
+                <h1 class="text-fundo-branco hidden md:block md:text-4xl font-fran first-letter:text-laranja-primary">Receitas da
+                    <span class="text-laranja-primary">M</span>imia</h1>
                 <img src="img/chef-hat.svg" height="40" width="40" alt="">
             </div>
 
@@ -142,6 +143,8 @@
                     </svg>
                     Adicionar ingrediente
                 </button>
+                <p id="erro-receita" class="hidden text-[#CC3F3A] text-sm mt-1">Por favor, insira pelo menos um ingrediente.</p>
+
             </div>
 
             <div class="mt-6">
@@ -152,6 +155,7 @@
                     </svg>
                     Adicionar etapa
                 </button>
+                <p id="erro-preparo" class="hidden text-[#CC3F3A] text-sm mt-1">Por favor, insira pelo menos uma etapa.</p>
             </div>
 
             <div class="mt-8 flex gap-4 justify-end">

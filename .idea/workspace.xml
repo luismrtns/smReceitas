@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11ff8d30-d47c-45be-b9ff-0754556c29b8" name="Changes" comment="adição de animação pra abrir detalhes">
+    <list default="true" id="11ff8d30-d47c-45be-b9ff-0754556c29b8" name="Changes" comment="adição de animações nos cards e funções de criar, editar e excluir receitas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/output.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/output.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +95,7 @@
       <workItem from="1777381600310" duration="12722000" />
       <workItem from="1777486515306" duration="7318000" />
       <workItem from="1777497279367" duration="3178000" />
-      <workItem from="1777554826667" duration="4594000" />
+      <workItem from="1777554826667" duration="7970000" />
     </task>
     <task id="LOCAL-00001" summary="adição dos arquivos">
       <option name="closed" value="true" />
@@ -376,7 +377,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777557132965</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="adição de animações nos cards e funções de criar, editar e excluir receitas">
+      <option name="closed" value="true" />
+      <created>1777559700160</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1777559700160</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,7 +403,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="pegando os dados e salvando os dados no localstorage" />
     <MESSAGE value="renderização do card" />
     <MESSAGE value="criação de evento para apagar receita" />
     <MESSAGE value="melhorias no modal e quantidade de receitas" />
@@ -419,6 +427,7 @@
     <MESSAGE value="adição de popup" />
     <MESSAGE value="adição de popupp" />
     <MESSAGE value="adição de animação pra abrir detalhes" />
-    <option name="LAST_COMMIT_MESSAGE" value="adição de animação pra abrir detalhes" />
+    <MESSAGE value="adição de animações nos cards e funções de criar, editar e excluir receitas" />
+    <option name="LAST_COMMIT_MESSAGE" value="adição de animações nos cards e funções de criar, editar e excluir receitas" />
   </component>
 </project>

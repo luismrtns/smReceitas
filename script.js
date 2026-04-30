@@ -236,10 +236,14 @@ function resetarBotao(id){
 }
 
 function mostrarToast(mensagem, tipo = 'sucesso'){
-   const toast = document.createElement('div')
-    toast.className = `fixed bottom-6 right-6 z-50 px-5 py-3 rounded-full font-semibold text-sm shadow-lg transition-all duration-300 opacity-0 translate-y-4 
+    const toast = document.createElement('div')
+    const sucesso = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256"><path d="M243.28,68.24l-24-23.56a16,16,0,0,0-22.59,0L104,136.23l-36.69-35.6a16,16,0,0,0-22.58.05l-24,24a16,16,0,0,0,0,22.61l71.62,72a16,16,0,0,0,22.63,0L243.33,90.91A16,16,0,0,0,243.28,68.24ZM103.62,208,32,136l24-24a.6.6,0,0,1,.08.08l42.35,41.09a8,8,0,0,0,11.19,0L208.06,56,232,79.6Z"></path></svg>`
+    const falha = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#faf6ed" viewBox="0 0 256 256"><path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg>`
+    const icone = tipo === 'sucesso' ? sucesso : falha
+
+    toast.className = `fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full font-semibold text-sm shadow-lg transition-all duration-300 opacity-0 translate-y-4 
     ${tipo === 'sucesso' ? 'bg-laranja-primary text-preto' : 'bg-[#CC3F3A] text-fundo-branco'}`
-    toast.textContent = mensagem
+    toast.innerHTML = `${icone} <span>${mensagem}</span>`
     document.body.appendChild(toast)
 
     requestAnimationFrame(() => {
@@ -325,12 +329,26 @@ function salvarReceita(event){
         }
     })
 
+    if(ingredientes.length === 0){
+        document.getElementById('erro-receita').classList.remove('hidden')
+        return;
+    }else{
+        document.getElementById('erro-receita').classList.add('hidden')
+    }
+
     const preparo = []
     document.querySelectorAll('#lista-preparo input').forEach((input) => {
         if(input.value.trim() !== ''){
             preparo.push(input.value.trim())
         }
     })
+
+    if(preparo.length === 0){
+        document.getElementById('erro-preparo').classList.remove('hidden')
+        return;
+    }else{
+        document.getElementById('erro-preparo').classList.add('hidden')
+    }
 
     const receita = {
         id: idEdicao ? idEdicao : Date.now(),
@@ -411,7 +429,7 @@ function renderizarReceitas(filtro = 'todos'){
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2">
-                            <h2 class="text-xl font-fran font-bold truncate">${receita.nome}</h2>
+                            <h2 class="text-xl font-fran font-bold truncate capitalize">${receita.nome}</h2>
                             
                         </div>
                         <div class="flex flex-wrap gap-3 mt-2">
@@ -452,7 +470,7 @@ function renderizarReceitas(filtro = 'todos'){
                 <div class="hidden md:block">
                     <div class="bg-fundo-branco dark:bg-fundo-branco/10 border-2 border-preto/15 dark:border-fundo-branco/15 rounded-xl h-25 flex items-center justify-center text-5xl">${receita.emoji}</div>
                     <div class="flex items-center mt-4 gap-2">
-                        <h2 class="text-2xl font-fran font-bold truncate">${receita.nome}</h2>
+                        <h2 class="text-2xl font-fran font-bold truncate capitalize">${receita.nome}</h2>
                         ${iconeTipo}
                     </div>
                     <div class="flex gap-4 py-2">
@@ -613,7 +631,7 @@ function initAbrirDetalhes(id){
     document.getElementById('conteudo-detalhes').innerHTML = `
         <div class="text-4xl mb-5">${receita.emoji}</div>
         <div class="flex items-center mt-4 gap-2">
-            <h3 class="text-2xl md:text-3xl font-fran font-bold">${receita.nome}</h3>
+            <h3 class="text-2xl md:text-3xl font-fran font-bold capitalize">${receita.nome}</h3>
             
         </div>
         
