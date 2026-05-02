@@ -235,6 +235,12 @@ function resetarBotao(id){
     btn.parentNode.replaceChild(clone, btn)
 }
 
+function extrairIdYoutube(url){
+    const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/
+    const match = url.match(regex)
+    return match ? match[1] : ''
+}
+
 function mostrarToast(mensagem, tipo = 'sucesso'){
     const toast = document.createElement('div')
     const sucesso = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256"><path d="M243.28,68.24l-24-23.56a16,16,0,0,0-22.59,0L104,136.23l-36.69-35.6a16,16,0,0,0-22.58.05l-24,24a16,16,0,0,0,0,22.61l71.62,72a16,16,0,0,0,22.63,0L243.33,90.91A16,16,0,0,0,243.28,68.24ZM103.62,208,32,136l24-24a.6.6,0,0,1,.08.08l42.35,41.09a8,8,0,0,0,11.19,0L208.06,56,232,79.6Z"></path></svg>`
@@ -313,6 +319,7 @@ function salvarReceita(event){
     const tipo = document.getElementById('tipo-receita').value;
     const tempo = document.getElementById('tempo-receita').value;
     const pessoas = document.getElementById('qtd-pessoas').value;
+    const video = document.getElementById('videoReceita').value
 
     // se o nome da receita tiver vazio, vai dar um aviso e não vai salvar
     if(nome.trim() === ''){
@@ -357,6 +364,7 @@ function salvarReceita(event){
         tipo,
         tempo,
         pessoas,
+        video,
         ingredientes,
         preparo
     }
@@ -390,6 +398,7 @@ function salvarReceita(event){
     document.getElementById('emoji').value = '';
     document.getElementById('tempo-receita').value = '';
     document.getElementById('qtd-pessoas').value = '';
+    document.getElementById('videoReceita').value = ''
     document.getElementById('lista-ingredientes').innerHTML = '';
     document.getElementById('lista-preparo').innerHTML = '';
 
@@ -675,6 +684,18 @@ function initAbrirDetalhes(id){
             )).join('')}
         </ul>
         
+        ${receita.video ? `
+            <h2 class="text-xl font-semibold mt-6 font-fran">Vídeo</h2>
+            <div class="mt-3 rounded-xl overflow-hidden">
+                <iframe 
+                    src="https://www.youtube.com/embed/${extrairIdYoutube(receita.video)}" 
+                    class="w-full" 
+                    height="220"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        ` : ''}
+        
         <div class="mt-8 flex gap-4 justify-end">
             <button id="btn-cancelar-detalhes" class="border-2 border-marrom/70 text-preto/70 hover:border-marrom hover:text-fundo-branco hover:bg-marrom dark:border-fundo-branco/40 dark:text-fundo-branco px-6 py-2 rounded-full cursor-pointer transition-all duration-300">Sair</button>
         </div>
@@ -733,6 +754,7 @@ function initAbrirEdicao(id){
     document.getElementById('tipo-receita').value = receita.tipo
     document.getElementById('tempo-receita').value = receita.tempo
     document.getElementById('qtd-pessoas').value = receita.pessoas
+    document.getElementById('videoReceita').value = receita.video
 
     const listaIngredientes = document.getElementById('lista-ingredientes')
     listaIngredientes.innerHTML = ''

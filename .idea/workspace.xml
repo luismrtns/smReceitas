@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11ff8d30-d47c-45be-b9ff-0754556c29b8" name="Changes" comment="adição de animações nos cards e funções de criar, editar e excluir receitas">
+    <list default="true" id="11ff8d30-d47c-45be-b9ff-0754556c29b8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/script.js" afterDir="false" />
@@ -14,6 +14,14 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,11 +41,11 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/index.html" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "ffad00ff",
-  "associatedIndex": 5,
-  "fromUser": true
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;ffad00ff&quot;,
+  &quot;associatedIndex&quot;: 5,
+  &quot;fromUser&quot;: true
+}</component>
   <component name="ProjectId" id="3CfZUsdnZ13Ccuh0sjWVlSjozCI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -45,6 +53,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -95,7 +104,8 @@
       <workItem from="1777381600310" duration="12722000" />
       <workItem from="1777486515306" duration="7318000" />
       <workItem from="1777497279367" duration="3178000" />
-      <workItem from="1777554826667" duration="7970000" />
+      <workItem from="1777554826667" duration="11717000" />
+      <workItem from="1777763007499" duration="1200000" />
     </task>
     <task id="LOCAL-00001" summary="adição dos arquivos">
       <option name="closed" value="true" />
@@ -385,7 +395,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777559700160</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="ajustes de toasts e cores do nome">
+      <option name="closed" value="true" />
+      <created>1777574143683</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1777574143683</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,7 +421,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="renderização do card" />
     <MESSAGE value="criação de evento para apagar receita" />
     <MESSAGE value="melhorias no modal e quantidade de receitas" />
     <MESSAGE value="ajuste no botão de excluir" />
@@ -428,6 +445,7 @@
     <MESSAGE value="adição de popupp" />
     <MESSAGE value="adição de animação pra abrir detalhes" />
     <MESSAGE value="adição de animações nos cards e funções de criar, editar e excluir receitas" />
-    <option name="LAST_COMMIT_MESSAGE" value="adição de animações nos cards e funções de criar, editar e excluir receitas" />
+    <MESSAGE value="ajustes de toasts e cores do nome" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajustes de toasts e cores do nome" />
   </component>
 </project>
