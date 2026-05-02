@@ -537,6 +537,12 @@
       border-bottom-color: color-mix(in oklab, var(--color-marrom) 20%, transparent);
     }
   }
+  .bg-\[\#25D366\] {
+    background-color: #25D366;
+  }
+  .bg-\[\#213A40\] {
+    background-color: #213A40;
+  }
   .bg-\[\#CC3F3A\] {
     background-color: #CC3F3A;
   }
@@ -712,6 +718,9 @@
       color: color-mix(in oklab, var(--color-preto) 70%, transparent);
     }
   }
+  .text-white {
+    color: var(--color-white);
+  }
   .capitalize {
     text-transform: capitalize;
   }
@@ -875,6 +884,14 @@
     &:hover {
       @media (hover: hover) {
         --tw-brightness: brightness(110%);
+        filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+      }
+    }
+  }
+  .hover\:brightness-130 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-brightness: brightness(130%);
         filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
       }
     }

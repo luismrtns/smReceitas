@@ -241,6 +241,17 @@ function extrairIdYoutube(url){
     return match ? match[1] : ''
 }
 
+function compartilhar(receita){
+    const ingredientes = receita.ingredientes.map((ingrediente, index) => `${index + 1}. ${ingrediente}`).join('\n')
+    const preparo = receita.preparo.map((etapa, i) => `${i + 1}. ${etapa}`).join('\n')
+    const video = receita.video ? `\n\n🎥 Vídeo (opcional): ${receita.video}` : ''
+
+    const texto = `${receita.emoji} *${receita.nome}*\n\n⏱ Tempo: ${receita.tempo} min\n👤 Pessoas: ${receita.pessoas}\n\n📋 *Ingredientes:*\n${ingredientes}\n\n👨‍🍳 *Modo de preparo:*\n${preparo}${video}`
+
+    const url = `https://wa.me/?text=${encodeURIComponent(texto)}`
+    window.open(url, '_blank')
+}
+
 function mostrarToast(mensagem, tipo = 'sucesso'){
     const toast = document.createElement('div')
     const sucesso = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256"><path d="M243.28,68.24l-24-23.56a16,16,0,0,0-22.59,0L104,136.23l-36.69-35.6a16,16,0,0,0-22.58.05l-24,24a16,16,0,0,0,0,22.61l71.62,72a16,16,0,0,0,22.63,0L243.33,90.91A16,16,0,0,0,243.28,68.24ZM103.62,208,32,136l24-24a.6.6,0,0,1,.08.08l42.35,41.09a8,8,0,0,0,11.19,0L208.06,56,232,79.6Z"></path></svg>`
@@ -697,9 +708,13 @@ function initAbrirDetalhes(id){
         ` : ''}
         
         <div class="mt-8 flex gap-4 justify-end">
+            <button id="btn-compartilhar" class="bg-[#213A40] text-fundo-branco px-6 py-2 rounded-full font-semibold cursor-pointer transition-all duration-300 hover:brightness-130 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FAF6ED" viewBox="0 0 256 256"><path d="M187.58,144.84l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88,40,40,0,0,0,40-40A8,8,0,0,0,187.58,144.84ZM152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155l14.61-9.74,23,11.48A24,24,0,0,1,152,176ZM128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"></path></svg>
+                Compartilhar
+            </button>
             <button id="btn-cancelar-detalhes" class="border-2 border-marrom/70 text-preto/70 hover:border-marrom hover:text-fundo-branco hover:bg-marrom dark:border-fundo-branco/40 dark:text-fundo-branco px-6 py-2 rounded-full cursor-pointer transition-all duration-300">Sair</button>
         </div>
-    `
+            `
     document.getElementById('form-detalhes').classList.remove('hidden')
 
     const fundo = document.getElementById('form-detalhes')
@@ -715,6 +730,9 @@ function initAbrirDetalhes(id){
     }, 10)
 
     document.getElementById('btn-cancelar-detalhes').addEventListener('click', initFecharDetalhes);
+    document.getElementById('btn-compartilhar').addEventListener('click', () => {
+        compartilhar(receita)
+    })
 }
 
 function initFecharDetalhes(){
