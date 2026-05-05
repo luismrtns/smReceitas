@@ -892,7 +892,7 @@ function initAbrirDetalhes(id){
     document.getElementById('btn-compartilhar').addEventListener('click', () => {
         compartilhar(receita)
     })
-    document.querySelector('.btn-exportar-pdf').addEventListener('click', () => {
+    document.querySelector('#conteudo-detalhes .btn-exportar-pdf').addEventListener('click', () => {
         expPDF(receita)
     })
 }
