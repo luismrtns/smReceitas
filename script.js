@@ -246,10 +246,148 @@ function compartilhar(receita){
     const preparo = receita.preparo.map((etapa, i) => `${i + 1}. ${etapa}`).join('\n')
     const video = receita.video ? `\n\n🎥 Vídeo (opcional): ${receita.video}` : ''
 
-    const texto = `${receita.emoji} *${receita.nome}*\n\n⏱ Tempo: ${receita.tempo} min\n👤 Pessoas: ${receita.pessoas}\n\n📋 *Ingredientes:*\n${ingredientes}\n\n👨‍🍳 *Modo de preparo:*\n${preparo}${video}`
+    const texto = `*${receita.nome}*\n\n Tempo: ${receita.tempo} min\n Pessoas: ${receita.pessoas}\n\n *Ingredientes:*\n${ingredientes}\n\n *Modo de preparo:*\n${preparo}${video}`
 
     const url = `https://wa.me/?text=${encodeURIComponent(texto)}`
     window.open(url, '_blank')
+}
+
+function expPDF(receita) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // 1. Paleta de Cores Ajustada (Foco em clareza e impressão)
+    const laranja = '#FF9D00';
+    const marrom = '#26150F';
+    const fundo = '#FAF6ED'; // creme muito claro
+    const cinza = '#333';
+
+    // Função interna para verificar se o texto vai sair da página
+    const quebrarPaginaSePreciso = (yAtual, espacoNecessario = 10) => {
+        if (yAtual + espacoNecessario > 280) { // 280 é perto do fim da folha A4 (297)
+            doc.addPage();
+            doc.setFillColor(fundo);
+            doc.rect(0, 0, 210, 297, 'F');
+            return 20; // Devolve o novo Y no topo da nova página
+        }
+        return yAtual;
+    };
+
+    // Preenche o fundo da primeira página
+    doc.setFillColor(fundo);
+    doc.rect(0, 0, 210, 297, 'F');
+
+    // 2. Cabeçalho (Faixa superior)
+    doc.setFillColor(marrom);
+    doc.rect(0, 0, 210, 45, 'F');
+
+    doc.setTextColor(255, 157, 0); // Texto branco no cabeçalho
+    doc.setFontSize(24);
+    doc.setFont('times', 'bold');
+    doc.text(`${receita.nome}`, 15, 25);
+
+    // Metadados da receita
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    const detalhes = `Tempo: ${receita.tempo} min   |   Rendimento: ${receita.pessoas} pessoa(s)`;
+    doc.text(detalhes, 15, 35);
+
+    let y = 60;
+
+    // 3. Ingredientes (Com estilo de Checkbox)
+    doc.setTextColor(marrom);
+    doc.setFontSize(16);
+    doc.setFont('times', 'bold');
+    doc.text('Ingredientes', 15, y);
+    y += 10;
+
+    doc.setTextColor(marrom);
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+
+    receita.ingredientes.forEach((ing) => {
+        y = quebrarPaginaSePreciso(y, 8);
+
+        // Desenha o quadrado do checkbox
+        doc.setDrawColor(marrom);
+        doc.setLineWidth(0.3);
+        doc.rect(15, y - 3, 3, 3);
+
+        doc.text(ing, 22, y); // Texto um pouco mais à frente
+        y += 8;
+    });
+
+    // Linha divisória
+    y += 5;
+    doc.setDrawColor(marrom);
+    doc.setLineWidth(0.5);
+    doc.line(15, y, 195, y);
+    y += 15;
+
+    // 4. Modo de Preparo
+    y = quebrarPaginaSePreciso(y, 15);
+    doc.setTextColor(marrom);
+    doc.setFontSize(16);
+    doc.setFont('times', 'bold');
+    doc.text('Modo de Preparo', 15, y);
+    y += 10;
+
+    doc.setTextColor(marrom);
+    doc.setFontSize(11);
+
+    receita.preparo.forEach((etapa, i) => {
+        // Número do passo em negrito
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${i + 1}.`, 15, y);
+
+        // Texto do passo normal
+        doc.setFont('helvetica', 'normal');
+        const linhas = doc.splitTextToSize(etapa, 170);
+
+        y = quebrarPaginaSePreciso(y, linhas.length * 6);
+        doc.text(linhas, 22, y);
+
+        y += (linhas.length * 6) + 4; // Espaçamento extra entre passos
+    });
+
+    // 5. Vídeo (Link clicável)
+    if (receita.video) {
+        y = quebrarPaginaSePreciso(y, 20);
+        y += 5;
+        doc.setDrawColor(marrom);
+        doc.line(15, y, 195, y);
+        y += 12;
+
+        doc.setTextColor(marrom);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Vídeo da Receita: ', 15, y);
+
+        // Transforma o texto num link azul
+        doc.setTextColor(0, 102, 204);
+        doc.setFont('helvetica', 'normal');
+        doc.textWithLink('Clique aqui para assistir no navegador', 50, y, { url: receita.video });
+
+        // Sublinhado manual do link
+        doc.setDrawColor(0, 102, 204);
+        doc.setLineWidth(0.2);
+        doc.line(50, y + 1, 114, y + 1);
+    }
+
+    // 6. Rodapé Automático (Em todas as páginas)
+    const totalPaginas = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPaginas; i++) {
+        doc.setPage(i);
+        doc.setTextColor(cinza);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'italic');
+        // Alinhado ao centro (X = 105 é o meio de 210mm)
+        doc.text(`Receitas da Mimia  -  Página ${i} de ${totalPaginas}`, 105, 290, { align: 'center' });
+    }
+
+    // Limpa o nome do ficheiro (tira espaços)
+    const nomeFicheiro = receita.nome.replace(/\s+/g, '_');
+    doc.save(`${nomeFicheiro}.pdf`);
 }
 
 function mostrarToast(mensagem, tipo = 'sucesso'){
@@ -437,6 +575,7 @@ function renderizarReceitas(filtro = 'todos'){
         const iconeDoce = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#faf6ed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rounded-full bg-marrom p-1 lucide lucide-dessert-icon lucide-dessert"><path d="M10.162 3.167A10 10 0 0 0 2 13a2 2 0 0 0 4 0v-1a2 2 0 0 1 4 0v4a2 2 0 0 0 4 0v-4a2 2 0 0 1 4 0v1a2 2 0 0 0 4-.006 10 10 0 0 0-8.161-9.826"/><path d="M20.804 14.869a9 9 0 0 1-17.608 0"/><circle cx="12" cy="4" r="2"/></svg>`;
         const iconeTipo = receita.tipo === 'salgado' ? iconeSalgado : iconeDoce
 
+
         const card = document.createElement('div')
         card.dataset.id = receita.id
         card.className = 'card max-h-52 md:hover:max-h-96 bg-white dark:bg-white/5 dark:backdrop-blur-lg dark:border dark:border-white/20 shadow-xl overflow-hidden p-4 rounded-xl w-full border-2 border-preto/10 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:border-laranja-primary cursor-pointer'
@@ -509,6 +648,7 @@ function renderizarReceitas(filtro = 'todos'){
                     </div>
                     <div class="flex gap-2 justify-center mt-4">
                         <button class="btn-editar bg-laranja-primary dark:bg-laranja-primary/30 dark:hover:bg-laranja-primary/70 dark:backdrop-blur-lg dark:border dark:border-white/20 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/note-pencil.svg" height="25" width="25" alt=""></button>
+                        <button class="btn-exportar-pdf bg-marrom dark:bg-marrom/30 dark:hover:bg-marrom/70 dark:backdrop-blur-lg dark:border dark:border-white/20 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/file-pdf.svg" height="25" width="25" alt=""></button>
                         <button data-id="${receita.id}" class="btn-apagar bg-[#CC3F3A] dark:bg-[#CC3F3A]/20 dark:hover:bg-[#CC3F3A]/70 dark:backdrop-blur-md dark:border dark:border-red-500/30 p-2 rounded-full transition-all duration-300 cursor-pointer"><img src="img/trash.svg" height="25" width="25" alt=""></button>
                     </div>
                 </div>`
@@ -578,10 +718,22 @@ document.querySelector('section').addEventListener('click', (event) => {
     if (!card) return;
 
     const id = +card.dataset.id;
+    const receitas = JSON.parse(localStorage.getItem('receitas')) || [];
+
+    const btnPdf = target.closest('.btn-exportar-pdf');
     const btnApagar = target.closest('.btn-apagar');
     const btnEditar = target.closest('.btn-editar');
     const btnMobile = target.closest('.btn-opcoes-mobile');
     const menuDropdown = target.closest('.menu-dropdown');
+
+    if (btnPdf) {
+        event.stopPropagation();
+
+        const receita = receitas.find(r => r.id === id);
+        if (receita) expPDF(receita);
+
+        return;
+    }
 
     // Se o botão de opções mobile for clicado
     if (btnMobile) {
@@ -598,31 +750,30 @@ document.querySelector('section').addEventListener('click', (event) => {
     // Se o botão de apagar for clicado
     if (btnApagar) {
         if (confirm('Tem certeza que deseja excluir esta receita?')) {
-
             card.style.transition = 'all 0.3s ease';
             card.style.opacity = '0';
             card.style.transform = 'scale(0.8)';
 
             setTimeout(() => {
-                let receitas = JSON.parse(localStorage.getItem('receitas')) || [];
-                receitas = receitas.filter(receita => receita.id !== id);
-                localStorage.setItem('receitas', JSON.stringify(receitas));
+                let receitasAtuais = JSON.parse(localStorage.getItem('receitas')) || [];
+                receitasAtuais = receitasAtuais.filter(receita => receita.id !== id);
+                localStorage.setItem('receitas', JSON.stringify(receitasAtuais));
 
                 renderizarReceitas();
-                mostrarToast('Receita excluída!', 'erro')
+                mostrarToast('Receita excluída!', 'erro');
             }, 300);
         }
         return;
     }
 
-    // Se o botão de editar for clicado (funcionalidade a ser implementada)
+    // Se o botão de editar for clicado
     if (btnEditar) {
-        event.stopPropagation()
-        initAbrirEdicao(id)
+        event.stopPropagation();
+        initAbrirEdicao(id);
         return;
     }
 
-    // Se o clique for no card (mas não nos botões ou no menu dropdown), abre os detalhes
+    // Se chegou até o fim e o clique foi no card (mas não nos botões / menu), abre os detalhes
     if (card && !menuDropdown) {
         initAbrirDetalhes(id);
     }
@@ -712,6 +863,10 @@ function initAbrirDetalhes(id){
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FAF6ED" viewBox="0 0 256 256"><path d="M187.58,144.84l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88,40,40,0,0,0,40-40A8,8,0,0,0,187.58,144.84ZM152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155l14.61-9.74,23,11.48A24,24,0,0,1,152,176ZM128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"></path></svg>
                 Compartilhar
             </button>
+            <button class="btn-exportar-pdf bg-marrom dark:bg-laranja-primary text-fundo-branco dark:text-preto px-6 py-2 rounded-full font-semibold cursor-pointer transition-all duration-300 hover:brightness-130 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M224,152a8,8,0,0,1-8,8H192v16h16a8,8,0,0,1,0,16H192v16a8,8,0,0,1-16,0V152a8,8,0,0,1,8-8h32A8,8,0,0,1,224,152ZM92,172a28,28,0,0,1-28,28H56v8a8,8,0,0,1-16,0V152a8,8,0,0,1,8-8H64A28,28,0,0,1,92,172Zm-16,0a12,12,0,0,0-12-12H56v24h8A12,12,0,0,0,76,172Zm88,8a36,36,0,0,1-36,36H112a8,8,0,0,1-8-8V152a8,8,0,0,1,8-8h16A36,36,0,0,1,164,180Zm-16,0a20,20,0,0,0-20-20h-8v40h8A20,20,0,0,0,148,180ZM40,112V40A16,16,0,0,1,56,24h96a8,8,0,0,1,5.66,2.34l56,56A8,8,0,0,1,216,88v24a8,8,0,0,1-16,0V96H152a8,8,0,0,1-8-8V40H56v72a8,8,0,0,1-16,0ZM160,80h28.69L160,51.31Z"></path></svg>
+                Exp. PDF
+            </button>
             <button id="btn-cancelar-detalhes" class="border-2 border-marrom/70 text-preto/70 hover:border-marrom hover:text-fundo-branco hover:bg-marrom dark:border-fundo-branco/40 dark:text-fundo-branco px-6 py-2 rounded-full cursor-pointer transition-all duration-300">Sair</button>
         </div>
             `
@@ -732,6 +887,9 @@ function initAbrirDetalhes(id){
     document.getElementById('btn-cancelar-detalhes').addEventListener('click', initFecharDetalhes);
     document.getElementById('btn-compartilhar').addEventListener('click', () => {
         compartilhar(receita)
+    })
+    document.querySelector('.btn-exportar-pdf').addEventListener('click', () => {
+        expPDF(receita)
     })
 }
 

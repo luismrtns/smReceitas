@@ -249,9 +249,6 @@
   .col-span-2 {
     grid-column: span 2 / span 2;
   }
-  .col-span-3 {
-    grid-column: span 3 / span 3;
-  }
   .mx-auto {
     margin-inline: auto;
   }
@@ -537,9 +534,6 @@
       border-bottom-color: color-mix(in oklab, var(--color-marrom) 20%, transparent);
     }
   }
-  .bg-\[\#25D366\] {
-    background-color: #25D366;
-  }
   .bg-\[\#213A40\] {
     background-color: #213A40;
   }
@@ -718,11 +712,11 @@
       color: color-mix(in oklab, var(--color-preto) 70%, transparent);
     }
   }
-  .text-white {
-    color: var(--color-white);
-  }
   .capitalize {
     text-transform: capitalize;
+  }
+  .italic {
+    font-style: italic;
   }
   .opacity-0 {
     opacity: 0%;
@@ -1050,11 +1044,6 @@
       }
     }
   }
-  .dark\:border-b-fundo-branco {
-    &:where(.dark, .dark *) {
-      border-bottom-color: var(--color-fundo-branco);
-    }
-  }
   .dark\:border-b-fundo-branco\/10 {
     &:where(.dark, .dark *) {
       border-bottom-color: color-mix(in srgb, #FAF6ED 10%, transparent);
@@ -1100,6 +1089,14 @@
   .dark\:bg-marrom {
     &:where(.dark, .dark *) {
       background-color: var(--color-marrom);
+    }
+  }
+  .dark\:bg-marrom\/30 {
+    &:where(.dark, .dark *) {
+      background-color: color-mix(in srgb, #26150F 30%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-marrom) 30%, transparent);
+      }
     }
   }
   .dark\:bg-white\/5 {
@@ -1215,6 +1212,18 @@
           background-color: color-mix(in srgb, #FF9D00 70%, transparent);
           @supports (color: color-mix(in lab, red, red)) {
             background-color: color-mix(in oklab, var(--color-laranja-primary) 70%, transparent);
+          }
+        }
+      }
+    }
+  }
+  .dark\:hover\:bg-marrom\/70 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          background-color: color-mix(in srgb, #26150F 70%, transparent);
+          @supports (color: color-mix(in lab, red, red)) {
+            background-color: color-mix(in oklab, var(--color-marrom) 70%, transparent);
           }
         }
       }
