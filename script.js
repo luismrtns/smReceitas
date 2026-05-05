@@ -613,10 +613,14 @@ function renderizarReceitas(filtro = 'todos'){
                             <path d="M128,72a16,16,0,1,0-16-16A16,16,0,0,0,128,72Zm0,40a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,72a16,16,0,1,0,16,16A16,16,0,0,0,128,184Z"></path>
                         </svg>
                     </button>
-                    <div class="menu-dropdown hidden absolute right-4 top-4 bg-white dark:bg-marrom border border-gray-200 dark:border-white/10 rounded-xl shadow-lg p-2 z-20 min-w-35">
+                    <div class="menu-dropdown hidden absolute right-4 top-0 bg-white dark:bg-marrom border border-gray-200 dark:border-white/10 rounded-xl shadow-lg p-2 z-20 min-w-35">
                         <button class="btn-editar flex items-center gap-2 px-4 py-2 text-sm w-full rounded-lg hover:bg-fundo-branco dark:hover:bg-white/10 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z"></path></svg>
                             Editar
+                        </button>
+                        <button class="btn-exportar-pdf flex items-center gap-2 px-4 py-2 text-sm w-full rounded-lg hover:bg-fundo-branco dark:hover:bg-white/10 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M224,152a8,8,0,0,1-8,8H192v16h16a8,8,0,0,1,0,16H192v16a8,8,0,0,1-16,0V152a8,8,0,0,1,8-8h32A8,8,0,0,1,224,152ZM92,172a28,28,0,0,1-28,28H56v8a8,8,0,0,1-16,0V152a8,8,0,0,1,8-8H64A28,28,0,0,1,92,172Zm-16,0a12,12,0,0,0-12-12H56v24h8A12,12,0,0,0,76,172Zm88,8a36,36,0,0,1-36,36H112a8,8,0,0,1-8-8V152a8,8,0,0,1,8-8h16A36,36,0,0,1,164,180Zm-16,0a20,20,0,0,0-20-20h-8v40h8A20,20,0,0,0,148,180ZM40,112V40A16,16,0,0,1,56,24h96a8,8,0,0,1,5.66,2.34l56,56A8,8,0,0,1,216,88v24a8,8,0,0,1-16,0V96H152a8,8,0,0,1-8-8V40H56v72a8,8,0,0,1-16,0ZM160,80h28.69L160,51.31Z"></path></svg>
+                            PDF
                         </button>
                         <button data-id="${receita.id}" class="btn-apagar flex items-center gap-2 px-4 py-2 text-sm w-full text-[#CC3F3A] rounded-lg hover:bg-red-50 dark:hover:bg-[#CC3F3A]/20 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-[#CC3F3A]" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg>

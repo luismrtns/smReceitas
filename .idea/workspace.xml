@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11ff8d30-d47c-45be-b9ff-0754556c29b8" name="Changes" comment="adição de compartilhamento via whatsapp">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/output.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/output.css" afterDir="false" />
-    </list>
+    <list default="true" id="11ff8d30-d47c-45be-b9ff-0754556c29b8" name="Changes" comment="adição da opção de exportar para pdf" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -106,7 +101,7 @@
       <workItem from="1777497279367" duration="3178000" />
       <workItem from="1777554826667" duration="11717000" />
       <workItem from="1777763007499" duration="4208000" />
-      <workItem from="1778002388860" duration="4696000" />
+      <workItem from="1778002388860" duration="4997000" />
     </task>
     <task id="LOCAL-00001" summary="adição dos arquivos">
       <option name="closed" value="true" />
@@ -420,7 +415,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777765650780</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="adição da opção de exportar para pdf">
+      <option name="closed" value="true" />
+      <created>1778007453648</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1778007453648</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -438,7 +441,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ajuste no botão de excluir" />
     <MESSAGE value="ajuste ícone" />
     <MESSAGE value="criação modal de detalhes dos cards" />
     <MESSAGE value="ajustes estilos modal detalhes" />
@@ -463,6 +465,7 @@
     <MESSAGE value="ajustes de toasts e cores do nome" />
     <MESSAGE value="adição de video do youtube no form" />
     <MESSAGE value="adição de compartilhamento via whatsapp" />
-    <option name="LAST_COMMIT_MESSAGE" value="adição de compartilhamento via whatsapp" />
+    <MESSAGE value="adição da opção de exportar para pdf" />
+    <option name="LAST_COMMIT_MESSAGE" value="adição da opção de exportar para pdf" />
   </component>
 </project>
