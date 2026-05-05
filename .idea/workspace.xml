@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11ff8d30-d47c-45be-b9ff-0754556c29b8" name="Changes" comment="adição da opção de exportar para pdf" />
+    <list default="true" id="11ff8d30-d47c-45be-b9ff-0754556c29b8" name="Changes" comment="exportar no mobile">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/script.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,7 +104,7 @@
       <workItem from="1777497279367" duration="3178000" />
       <workItem from="1777554826667" duration="11717000" />
       <workItem from="1777763007499" duration="4208000" />
-      <workItem from="1778002388860" duration="4997000" />
+      <workItem from="1778002388860" duration="5620000" />
     </task>
     <task id="LOCAL-00001" summary="adição dos arquivos">
       <option name="closed" value="true" />
@@ -423,7 +426,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778007453648</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="exportar no mobile">
+      <option name="closed" value="true" />
+      <created>1778007774937</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1778007774937</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,7 +452,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ajuste ícone" />
     <MESSAGE value="criação modal de detalhes dos cards" />
     <MESSAGE value="ajustes estilos modal detalhes" />
     <MESSAGE value="adição de comentários e melhoria do código" />
@@ -466,6 +476,7 @@
     <MESSAGE value="adição de video do youtube no form" />
     <MESSAGE value="adição de compartilhamento via whatsapp" />
     <MESSAGE value="adição da opção de exportar para pdf" />
-    <option name="LAST_COMMIT_MESSAGE" value="adição da opção de exportar para pdf" />
+    <MESSAGE value="exportar no mobile" />
+    <option name="LAST_COMMIT_MESSAGE" value="exportar no mobile" />
   </component>
 </project>
