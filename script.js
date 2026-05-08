@@ -366,7 +366,7 @@ function expPDF(receita) {
         // Transforma o texto num link azul
         doc.setTextColor(0, 102, 204);
         doc.setFont('helvetica', 'normal');
-        doc.textWithLink('Clique aqui para assistir no navegador', 50, y, { url: receita.video });
+        doc.textWithLink(' Clique aqui para assistir no navegador', 50, y, { url: receita.video });
 
         // Sublinhado manual do link
         doc.setDrawColor(0, 102, 204);
@@ -460,11 +460,11 @@ function initFecharForm(){
 document.getElementById('btn-cancelar').addEventListener('click', initFecharForm)
 
 // Salva a nova receita
-function salvarReceita(event){
+async function salvarReceita(event){
     event.preventDefault()
 
     const nome = document.getElementById('nome-receita').value;
-    const emoji = document.getElementById('emoji').value;
+    const emoji = document.getElementById('emoji').value.trim() || '🍽️';
     const tipo = document.getElementById('tipo-receita').value;
     const tempo = document.getElementById('tempo-receita').value;
     const pessoas = document.getElementById('qtd-pessoas').value;
@@ -492,6 +492,20 @@ function salvarReceita(event){
         document.getElementById('erro-receita').classList.add('hidden')
     }
 
+    const btnSalvar = document.getElementById('btn-salvar')
+    btnSalvar.disabled = true
+    btnSalvar.innerHTML = `
+                        <span class="flex items-center gap-2">
+                            <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                            </svg>
+                            Salvando...
+                        </span>
+                    `
+
+    const calorias = await caloriasAPI(ingredientes)
+
     const preparo = []
     document.querySelectorAll('#lista-preparo input').forEach((input) => {
         if(input.value.trim() !== ''){
@@ -515,10 +529,13 @@ function salvarReceita(event){
         pessoas,
         video,
         ingredientes,
-        preparo
+        preparo,
+        calorias: calorias ? `${calorias} kcal (est.)` : ''
     }
 
     const receitas = JSON.parse(localStorage.getItem('receitas')) || []
+    btnSalvar.textContent = idEdicao ? 'Salvar alterações' : 'Salvar'
+    btnSalvar.disabled = false
     const estaEditado = !!idEdicao
 
     if(idEdicao){
@@ -584,7 +601,7 @@ function renderizarReceitas(filtro = 'todos'){
                 <!--mobile-->
                 <div class="flex items-start gap-4 mt-2 md:hidden">
                     <div class="bg-fundo-branco dark:bg-fundo-branco/10 border-2 border-preto/15 dark:border-fundo-branco/15 rounded-full w-16 h-16 shrink-0 flex items-center justify-center text-3xl">
-                        ${receita.emoji}
+                        ${receita.emoji || '🍽️'}
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2">
@@ -631,7 +648,7 @@ function renderizarReceitas(filtro = 'todos'){
             
                 <!--desktop: layout original-->
                 <div class="hidden md:block">
-                    <div class="bg-fundo-branco dark:bg-fundo-branco/10 border-2 border-preto/15 dark:border-fundo-branco/15 rounded-xl h-25 flex items-center justify-center text-5xl">${receita.emoji}</div>
+                    <div class="bg-fundo-branco dark:bg-fundo-branco/10 border-2 border-preto/15 dark:border-fundo-branco/15 rounded-xl h-25 flex items-center justify-center text-5xl">${receita.emoji || '🍽️'}</div>
                     <div class="flex items-center mt-4 gap-2">
                         <h2 class="text-2xl font-fran font-bold truncate capitalize">${receita.nome}</h2>
                         ${iconeTipo}
@@ -804,7 +821,7 @@ function initAbrirDetalhes(id){
     const iconeTipo = receita.tipo === 'salgado' ? iconeSalgado : iconeDoce
     // Preenche o modal com os detalhes da receita
     document.getElementById('conteudo-detalhes').innerHTML = `
-        <div class="text-4xl mb-5">${receita.emoji}</div>
+        <div class="text-4xl mb-5">${receita.emoji || '🍽️'}</div>
         <div class="flex items-center mt-4 gap-2">
             <h3 class="text-2xl md:text-3xl font-fran font-bold capitalize">${receita.nome}</h3>
             
@@ -822,6 +839,12 @@ function initAbrirDetalhes(id){
                     <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
                 </svg>
                 <span class="text-sm">${receita.pessoas} pessoa(s)</span>
+                ${receita.calorias ? `
+                <div class="flex gap-1 items-center">
+                    <span class="text-sm">🔥</span>
+                    <span class="text-sm font-semibold">${receita.calorias}</span>
+                </div>
+                ` : ''}
             </div>
             ${iconeTipo}
         </div>
@@ -972,4 +995,52 @@ function initInputComValor(idLista, placeholder, valor){
     itens.forEach((item, index) => {
         item.querySelector('.numero-item').textContent = `${index + 1}`
     })
+}
+
+async function traduzirIngles(texto){
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(texto)}&langpair=pt|en`
+
+    try{
+        const resposta = await fetch(url)
+        if(!resposta.ok) throw new Error('Falha na resposta da API de tradução')
+        const dados = await resposta.json()
+
+        return dados.responseData.translatedText
+    } catch(erro){
+        console.error('Erro ao traduzir: ' , erro)
+        return texto
+    }
+}
+
+async function caloriasAPI(ingredientes){
+    try {
+        const resultados = await Promise.all(
+            ingredientes.map(async (ingrediente) => {
+                const traduzido = await traduzirIngles(ingrediente)
+                console.log(`Original: "${ingrediente}" → Traduzido: "${traduzido}"`)
+
+                const resposta = await fetch(`https://api.api-ninjas.com/v1/nutrition?query=${encodeURIComponent(traduzido)}`, {
+                    method: 'GET',
+                    headers: { 'X-Api-Key': 'wajjFJ8O9kbRG2Rs1hMkKiYyFRGS2RPNq3Ehgrfu' }
+                })
+                if(!resposta.ok) return 0
+
+                const dados = await resposta.json()
+                console.log(dados)
+
+                let kcal = 0
+                dados.forEach(item => {
+                    kcal += (item.carbohydrates_total_g * 4) + (item.fat_total_g * 9)
+                })
+                return kcal
+            })
+        )
+
+        const total = resultados.reduce((soma, kcal) => soma + kcal, 0)
+        return Math.round(total)
+
+    } catch(erro) {
+        console.error('Erro ao calcular calorias:', erro)
+        return null
+    }
 }
