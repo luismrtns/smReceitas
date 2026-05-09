@@ -863,25 +863,27 @@ function initAbrirDetalhes(id){
             
         </div>
         
-        <div class="flex gap-4 mt-2">
+        <div class="flex gap-1 md:gap-2 mt-2">
             <div class="flex gap-1 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
                     <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
                 </svg>
                 <span class="text-sm">${receita.tempo} min</span>
             </div>
+            <span class="text-laranja-primary">|</span>
             <div class="flex gap-1 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
                     <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
                 </svg>
                 <span class="text-xs md:text-sm">${receita.pessoas} pessoa(s)</span>
-                ${receita.calorias ? `
+            </div>
+            ${receita.calorias ? `
+                <span class="text-laranja-primary">|</span>
                 <div class="flex gap-1 items-center">
-                    <span class="text-xs md:text-sm">🔥</span>
+                    <span class="text-xs md:text-sm"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256"><path d="M183.89,153.34a57.6,57.6,0,0,1-46.56,46.55A8.75,8.75,0,0,1,136,200a8,8,0,0,1-1.32-15.89c16.57-2.79,30.63-16.85,33.44-33.45a8,8,0,0,1,15.78,2.68ZM216,144a88,88,0,0,1-176,0c0-27.92,11-56.47,32.66-84.85a8,8,0,0,1,11.93-.89l24.12,23.41,22-60.41a8,8,0,0,1,12.63-3.41C165.21,36,216,84.55,216,144Zm-16,0c0-46.09-35.79-85.92-58.21-106.33L119.52,98.74a8,8,0,0,1-13.09,3L80.06,76.16C64.09,99.21,56,122,56,144a72,72,0,0,0,144,0Z"></path></svg></span>
                     <span class="text-xs md:text-sm font-semibold">${receita.calorias}</span>
                 </div>
                 ` : ''}
-            </div>
             ${iconeTipo}
         </div>
         
