@@ -229,18 +229,21 @@ function initAddInput(idLista, idBotao, placeholder){
 initAddInput('lista-ingredientes', 'btn-input', 'Ex: 200g de arroz')
 initAddInput('lista-preparo', 'btn-preparo', 'Ex: Misture os ingredientes...')
 
+// Recria um botão para limpar os ouvintes de eventos antigos
 function resetarBotao(id){
     const btn = document.getElementById(id)
     const clone = btn.cloneNode(true)
     btn.parentNode.replaceChild(clone, btn)
 }
 
+// Extrai o ID de um vídeo do YouTube a partir de uma URL
 function extrairIdYoutube(url){
     const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/
     const match = url.match(regex)
     return match ? match[1] : ''
 }
 
+// Abre o WhatsApp para compartilhar a receita
 function compartilhar(receita){
     const ingredientes = receita.ingredientes.map((ingrediente, index) => `${index + 1}. ${ingrediente}`).join('\n')
     const preparo = receita.preparo.map((etapa, i) => `${i + 1}. ${etapa}`).join('\n')
@@ -252,6 +255,7 @@ function compartilhar(receita){
     window.open(url, '_blank')
 }
 
+// Gera e baixa um PDF da receita
 function expPDF(receita) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -394,6 +398,7 @@ function expPDF(receita) {
     doc.save(`${nomeFicheiro}.pdf`);
 }
 
+// Mostra uma notificação (toast) na tela
 function mostrarToast(mensagem, tipo = 'sucesso'){
     const toast = document.createElement('div')
     const sucesso = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256"><path d="M243.28,68.24l-24-23.56a16,16,0,0,0-22.59,0L104,136.23l-36.69-35.6a16,16,0,0,0-22.58.05l-24,24a16,16,0,0,0,0,22.61l71.62,72a16,16,0,0,0,22.63,0L243.33,90.91A16,16,0,0,0,243.28,68.24ZM103.62,208,32,136l24-24a.6.6,0,0,1,.08.08l42.35,41.09a8,8,0,0,0,11.19,0L208.06,56,232,79.6Z"></path></svg>`
@@ -435,6 +440,7 @@ document.getElementById('nova-receita').addEventListener('click', () => {
     initModalForm()
 })
 
+// Abre o modal de formulário com animação
 function initModalForm(){
     const fundo = document.getElementById('form-modal')
     const caixa = document.getElementById('conteudo-form')
@@ -447,6 +453,7 @@ function initModalForm(){
     }, 10)
 }
 
+// Fecha o modal de formulário com animação
 function initFecharForm(){
     const fundo = document.getElementById('form-modal')
     const caixa = document.getElementById('conteudo-form')

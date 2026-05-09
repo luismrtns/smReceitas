@@ -1164,6 +1164,11 @@
       }
     }
   }
+  .dark\:bg-preto {
+    &:where(.dark, .dark *) {
+      background-color: var(--color-preto);
+    }
+  }
   .dark\:bg-white\/5 {
     &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, #fff 5%, transparent);
