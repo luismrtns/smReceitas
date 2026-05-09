@@ -584,6 +584,9 @@
   .fill-\[\#CC3F3A\] {
     fill: #CC3F3A;
   }
+  .fill-marrom {
+    fill: var(--color-marrom);
+  }
   .fill-marrom\/50 {
     fill: color-mix(in srgb, #26150F 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {

@@ -280,18 +280,22 @@ function expPDF(receita) {
     // 2. Cabeçalho (Faixa superior)
     doc.setFillColor(marrom);
     doc.rect(0, 0, 210, 45, 'F');
+    const imgLogo = 'chef-hat.png'
+    const logoLargura = 7;
+    const logoAltura = 7;
+    const logoX = (210 - logoLargura) / 2; // Cálculo de centralização
+    const logoY = 5; // Distância do topo
+    doc.addImage(imgLogo, 'PNG', logoX, logoY, logoLargura, logoAltura);
 
     doc.setTextColor(255, 157, 0); // Texto branco no cabeçalho
     doc.setFontSize(24);
     doc.setFont('times', 'bold');
-    doc.text(`${receita.nome}`, 15, 25);
-
+    doc.text(`${receita.nome}`, 105, 24, { align: 'center' });
     // Metadados da receita
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
     const detalhes = `Tempo: ${receita.tempo} min   |   Rendimento: ${receita.pessoas} pessoa(s)`;
-    doc.text(detalhes, 15, 35);
-
+    doc.text(detalhes, 105, 34, { align: 'center' });
     let y = 60;
 
     // 3. Ingredientes (Com estilo de Checkbox)
@@ -366,12 +370,12 @@ function expPDF(receita) {
         // Transforma o texto num link azul
         doc.setTextColor(0, 102, 204);
         doc.setFont('helvetica', 'normal');
-        doc.textWithLink(' Clique aqui para assistir no navegador', 50, y, { url: receita.video });
+        doc.textWithLink(' Clique aqui para assistir', 50, y, { url: receita.video });
 
         // Sublinhado manual do link
         doc.setDrawColor(0, 102, 204);
         doc.setLineWidth(0.2);
-        doc.line(50, y + 1, 114, y + 1);
+        doc.line(51, y + 1, 98, y + 1);
     }
 
     // 6. Rodapé Automático (Em todas as páginas)
@@ -598,7 +602,8 @@ function renderizarReceitas(filtro = 'todos'){
         section.innerHTML = `
                 <div class="col-span-1 md:col-span-3 flex flex-col items-center justify-center py-16 gap-4 text-center">
                     <div class="text-8xl">
-                        ${buscaAtiva ? '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#26150F" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#26150F" viewBox="0 0 256 256"><path d="M186.66,59.56C168.47,32.29,146.54,16,128,16S87.53,32.29,69.34,59.56C50.7,87.54,40,121.23,40,152a88,88,0,0,0,176,0C216,121.23,205.3,87.54,186.66,59.56ZM128,224a72.08,72.08,0,0,1-72-72c0-27.69,9.72-58.15,26.66-83.56C97.19,46.64,115.41,32,128,32c9.5,0,22.2,8.33,34.1,21.78L122,98.67a8,8,0,0,0,4,13.09l24.6,6.15-6.5,32.52a8,8,0,0,0,6.27,9.41A7.77,7.77,0,0,0,152,160a8,8,0,0,0,7.83-6.43l8-40a8,8,0,0,0-5.9-9.33l-19.16-4.79L172.1,66.6c.42.61.83,1.22,1.24,1.84C190.28,93.85,200,124.31,200,152A72.08,72.08,0,0,1,128,224Z"></path></svg>'}
+                        ${buscaAtiva ? '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" class="fill-marrom dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>'
+                            : '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" class="fill-marrom dark:fill-fundo-branco" viewBox="0 0 256 256"><path d="M186.66,59.56C168.47,32.29,146.54,16,128,16S87.53,32.29,69.34,59.56C50.7,87.54,40,121.23,40,152a88,88,0,0,0,176,0C216,121.23,205.3,87.54,186.66,59.56ZM128,224a72.08,72.08,0,0,1-72-72c0-27.69,9.72-58.15,26.66-83.56C97.19,46.64,115.41,32,128,32c9.5,0,22.2,8.33,34.1,21.78L122,98.67a8,8,0,0,0,4,13.09l24.6,6.15-6.5,32.52a8,8,0,0,0,6.27,9.41A7.77,7.77,0,0,0,152,160a8,8,0,0,0,7.83-6.43l8-40a8,8,0,0,0-5.9-9.33l-19.16-4.79L172.1,66.6c.42.61.83,1.22,1.24,1.84C190.28,93.85,200,124.31,200,152A72.08,72.08,0,0,1,128,224Z"></path></svg>'}
                     </div>
                     <h2 class="text-3xl font-fran text-marrom dark:text-fundo-branco">
                         ${buscaAtiva ? 'Nenhuma receita encontrada' : filtroAtivo ? 'Nenhuma receita aqui' : 'Nenhuma receita ainda'}
@@ -880,7 +885,11 @@ function initAbrirDetalhes(id){
             ${receita.calorias ? `
                 <span class="text-laranja-primary">|</span>
                 <div class="flex gap-1 items-center">
-                    <span class="text-xs md:text-sm"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256"><path d="M183.89,153.34a57.6,57.6,0,0,1-46.56,46.55A8.75,8.75,0,0,1,136,200a8,8,0,0,1-1.32-15.89c16.57-2.79,30.63-16.85,33.44-33.45a8,8,0,0,1,15.78,2.68ZM216,144a88,88,0,0,1-176,0c0-27.92,11-56.47,32.66-84.85a8,8,0,0,1,11.93-.89l24.12,23.41,22-60.41a8,8,0,0,1,12.63-3.41C165.21,36,216,84.55,216,144Zm-16,0c0-46.09-35.79-85.92-58.21-106.33L119.52,98.74a8,8,0,0,1-13.09,3L80.06,76.16C64.09,99.21,56,122,56,144a72,72,0,0,0,144,0Z"></path></svg></span>
+                    <span class="text-xs md:text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
+                            <path d="M183.89,153.34a57.6,57.6,0,0,1-46.56,46.55A8.75,8.75,0,0,1,136,200a8,8,0,0,1-1.32-15.89c16.57-2.79,30.63-16.85,33.44-33.45a8,8,0,0,1,15.78,2.68ZM216,144a88,88,0,0,1-176,0c0-27.92,11-56.47,32.66-84.85a8,8,0,0,1,11.93-.89l24.12,23.41,22-60.41a8,8,0,0,1,12.63-3.41C165.21,36,216,84.55,216,144Zm-16,0c0-46.09-35.79-85.92-58.21-106.33L119.52,98.74a8,8,0,0,1-13.09,3L80.06,76.16C64.09,99.21,56,122,56,144a72,72,0,0,0,144,0Z"></path>
+                        </svg>
+                    </span>
                     <span class="text-xs md:text-sm font-semibold">${receita.calorias}</span>
                 </div>
                 ` : ''}
