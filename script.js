@@ -581,10 +581,41 @@ function renderizarReceitas(filtro = 'todos'){
     const section = document.querySelector('section')
     section.innerHTML = ''
 
+    const busca = document.querySelector('input[type=search]').value.trim().toLowerCase()
+
     const receitasFiltradas = receitas.filter(receita => {
-        if(filtro === 'todos') return true
-        return receita.tipo === filtro
+       const filtroTipo = filtro === 'todos' || receita.tipo === filtro
+        const filtroBusca = receita.nome.toLowerCase().includes(busca)
+        return filtroTipo === filtroBusca
     })
+
+    const qtd = receitasFiltradas.length
+    document.querySelector('.qtd-receitas').textContent = qtd === 1 ? '1 receita' : `${qtd} receitas`
+
+    if(receitasFiltradas.length === 0){
+        const filtroAtivo = filtro !== 'todos'
+        const buscaAtiva = document.querySelector('input[type="search"]').value.trim() !== ''
+        section.innerHTML = `
+                <div class="col-span-1 md:col-span-3 flex flex-col items-center justify-center py-16 gap-4 text-center">
+                    <div class="text-8xl">
+                        ${buscaAtiva ? '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#26150F" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#26150F" viewBox="0 0 256 256"><path d="M186.66,59.56C168.47,32.29,146.54,16,128,16S87.53,32.29,69.34,59.56C50.7,87.54,40,121.23,40,152a88,88,0,0,0,176,0C216,121.23,205.3,87.54,186.66,59.56ZM128,224a72.08,72.08,0,0,1-72-72c0-27.69,9.72-58.15,26.66-83.56C97.19,46.64,115.41,32,128,32c9.5,0,22.2,8.33,34.1,21.78L122,98.67a8,8,0,0,0,4,13.09l24.6,6.15-6.5,32.52a8,8,0,0,0,6.27,9.41A7.77,7.77,0,0,0,152,160a8,8,0,0,0,7.83-6.43l8-40a8,8,0,0,0-5.9-9.33l-19.16-4.79L172.1,66.6c.42.61.83,1.22,1.24,1.84C190.28,93.85,200,124.31,200,152A72.08,72.08,0,0,1,128,224Z"></path></svg>'}
+                    </div>
+                    <h2 class="text-3xl font-fran text-marrom dark:text-fundo-branco">
+                        ${buscaAtiva ? 'Nenhuma receita encontrada' : filtroAtivo ? 'Nenhuma receita aqui' : 'Nenhuma receita ainda'}
+                    </h2>
+                    <p class="text-cinza dark:text-fundo-branco/70 font-light">
+                        ${buscaAtiva ? 'Tente buscar por outro nome.' : filtroAtivo ? 'Tente outro filtro.' : 'Adicione sua primeira receita!'}
+                    </p>
+                    ${!buscaAtiva && !filtroAtivo ? `
+                        <button onclick="document.getElementById('nova-receita').click()" class="mt-2 bg-laranja-primary py-2 px-6 rounded-full text-preto font-semibold cursor-pointer transition-all duration-200 hover:brightness-110 hover:scale-105 flex items-center gap-2">
+                            <img src="img/cookie.svg" width="20" height="20" alt="">
+                            Nova receita
+                        </button>
+                    ` : ''}
+                </div>
+                `
+        return
+    }
 
     // Itera sobre as receitas para criar um card para cada uma
     receitasFiltradas.forEach(receita => {
@@ -674,11 +705,16 @@ function renderizarReceitas(filtro = 'todos'){
                     </div>
                 </div>`
         section.appendChild(card)
+        receitasFiltradas.forEach((receita, index) => {
+            card.classList.add('card-animado')
+            card.style.animationDelay = `${index * 0.05}s`
+        })
     })
-    const qtd = receitasFiltradas.length
-    document.querySelector('.qtd-receitas').textContent = qtd === 1 ? '1 receita' : `${qtd} receitas`
 }
 renderizarReceitas()
+document.querySelector('input[type="search"]').addEventListener('input', () => {
+    renderizarReceitas()
+})
 
 // Função para filtrar as receitas por tipo
 function initFiltro() {
@@ -838,11 +874,11 @@ function initAbrirDetalhes(id){
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-preto dark:fill-fundo-branco" viewBox="0 0 256 256">
                     <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
                 </svg>
-                <span class="text-sm">${receita.pessoas} pessoa(s)</span>
+                <span class="text-xs md:text-sm">${receita.pessoas} pessoa(s)</span>
                 ${receita.calorias ? `
                 <div class="flex gap-1 items-center">
-                    <span class="text-sm">🔥</span>
-                    <span class="text-sm font-semibold">${receita.calorias}</span>
+                    <span class="text-xs md:text-sm">🔥</span>
+                    <span class="text-xs md:text-sm font-semibold">${receita.calorias}</span>
                 </div>
                 ` : ''}
             </div>
@@ -1037,7 +1073,7 @@ async function caloriasAPI(ingredientes){
         )
 
         const total = resultados.reduce((soma, kcal) => soma + kcal, 0)
-        return Math.round(total)
+        return Math.round(total * 1.05)
 
     } catch(erro) {
         console.error('Erro ao calcular calorias:', erro)
